@@ -290,7 +290,7 @@ label OW_reset_persistent:
 ############
 
 label OW_github:
-    $ webbrowser.open("")
+    $ webbrowser.open("https://github.com/Yun-Seo1/Open-World")
     jump ch30_loop
 
 
