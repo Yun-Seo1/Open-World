@@ -43,7 +43,11 @@ label OW_outside_mc_house:
             jump OW_outside_mc_house_talk
         "Interact":
             jump OW_outside_mc_house_interaction
+<<<<<<< Updated upstream
         "Return to [RTMAS.title()]":
+=======
+        "Return to [RTMAS]":
+>>>>>>> Stashed changes
             call OW_Go_Back_To_Classroom
 
 ##########################
@@ -110,7 +114,13 @@ label OW_outside_mc_house_interaction:
             xysize(125,None)
             xpos 1156
             ypos 465
+<<<<<<< Updated upstream
             action Jump("OW_residential_beta") hover_sound gui.hover_sound
+=======
+            if (persistent.OW_has_seen_residential_glitch == False):
+                action Jump("OW_residential_glitch") hover_sound gui.hover_sound
+            action Jump("OW_go_to_residential") hover_sound gui.hover_sound
+>>>>>>> Stashed changes
         textbutton ("Monika's House"):
             style "hkb_button"
             style_prefix "hkb"
@@ -119,9 +129,64 @@ label OW_outside_mc_house_interaction:
             ypos 362
             action Jump("OW_monika_house_beta") hover_sound gui.hover_sound
 
+<<<<<<< Updated upstream
 ##########################
 #Leaving the area
 ##########################
+=======
+####################
+#Residential fakeout
+####################
+
+label OW_residential_glitch:
+    show screen tear(20, 0.1, 0.1, 0, 40)
+    play sound "sfx/s_kill_glitch1.ogg"
+    pause 0.2
+    stop sound
+    hide screen tear
+    show monika 1r_owawm at t11
+    show monika at hop
+    m "EEEK!!"
+    m 8s_owawm "This way has the same problem as well..."
+    m 4s_owawm "I'm going to check the game files for this as well."
+    window hide
+    $ consolehistory = []
+    call updateconsole("Call Residential","Error")
+    m 5c_owawm "Error?... This is different..."
+    m "Let me try it again."
+    window hide
+    call updateconsole("Call Residential","Error")
+    call updateconsole("Call Residential","Error")
+    call updateconsole("Call Residential","Error")
+    m 8s_owawm "I'm not giving up!"
+    call updateconsole("Call Residential","Error")
+    m 5b_owawm "Stupid console, work!"
+    play sound "sfx/monikapound.ogg"
+    show layer master:
+        truecenter
+        parallel:
+            zoom 1.2
+            easeout 0.35 zoom 1.0
+            zoom 1.2
+            easeout 0.35 zoom 1.0
+            zoom 1.2
+            easeout 0.35 zoom 1.0
+    pause 1.0
+    call updateconsole("Call Residential", "Access Granted")
+    show monika 1l_owawm at hop
+    m "Ahaha... Guess it just needed a smack for it to work..."
+    m 4m_owawm "I should probably be more careful next time."
+    m 4e_owawm "I don't want to accidentally break my world again."
+    call hideconsole
+    m 1a_owawm "Since this way is now open, let's walk down the street."
+    m 5a_owawm "Maybe we can even head to the school."
+    $ persistent.OW_has_seen_residential_glitch = True
+    call screen OWAWM_outside
+
+#################
+#Leaving the area
+#################
+>>>>>>> Stashed changes
 
 label OW_back_to_mc_kitchen:
     m "Do you want to go back to {color=#000}[OW_mc]{/color}'s kitchen?{nw}"
@@ -152,6 +217,7 @@ label OW_go_to_sayori_room:
         "No":
             call screen OWAWM_outside()
 
+<<<<<<< Updated upstream
 label OW_residential_beta:
     show screen tear(20, 0.1, 0.1, 0, 40)
     play sound "sfx/s_kill_glitch1.ogg"
@@ -173,6 +239,9 @@ label OW_residential_beta:
     m 5a_owawm "Maybe even my home as well! That's wishful thinking though."
     m "I can't wait to see what gets added next. Let's check other places, okay [player]?"
     call screen OWAWM_outside
+=======
+
+>>>>>>> Stashed changes
 
 label OW_monika_house_beta:
     show screen tear(20, 0.1, 0.1, 0, 40)
@@ -205,3 +274,18 @@ label OW_monika_house_beta:
     extend "something new is being adding to my world."
     m "Let's check other places instead, okay? Ehehe~"
     call screen OWAWM_outside
+<<<<<<< Updated upstream
+=======
+
+label OW_go_to_residential:
+    m "Do you want to go down the street?{nw}"
+    $ _history_list.pop()
+    menu:
+        m "Do you want to go down the street?{fast}"
+        "Yes":
+            scene bg residential_day with dissolve_scene_full
+            pause 2.0
+            jump OW_residential
+        "No":
+            call screen OWAWM_outside()
+>>>>>>> Stashed changes

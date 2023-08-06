@@ -207,7 +207,11 @@ label OW_computer_rickroll:
 label OW_monika_twitter:
     m 1b_owawm "Since this place has computer has internet, I can do something like this"
     pause 2.0
+<<<<<<< Updated upstream
     $ webbrowser.open("https://twitter.com/lilmonix3?t=wuxtSo9WeHhFui91iEdSaA&s=33")
+=======
+    $ renpy.run(OpenURL("https://twitter.com/lilmonix3?t=wuxtSo9WeHhFui91iEdSaA&s=33"))
+>>>>>>> Stashed changes
     pause 2.0
     m 3l_owawm "...{w=1.0}Hope you're logged in to see it."
     m "I know I've said this isn't me but I don't mind directing you to her."

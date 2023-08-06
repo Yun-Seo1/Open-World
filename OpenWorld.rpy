@@ -27,7 +27,13 @@ init -990 python:
 #VARIABLES
 ##########
 #Stores the current background before entering the Open World mod
+<<<<<<< Updated upstream
 define RTMAS = persistent._mas_current_background
+=======
+define RTMAS = mas_current_background
+
+
+>>>>>>> Stashed changes
 
 #Calls on glitch text in place of their names
 #The first letter should be towards the character
@@ -52,6 +58,12 @@ default persistent.OW_has_seen_MC_Room = False
 default persistent.OW_has_seen_outside = False
 default persistent.OW_has_seen_sayori_room = False
 default persistent.OW_has_seen_MC_kitchen =False
+<<<<<<< Updated upstream
+=======
+default persistent.OW_has_seen_residential_glitch = False
+default persistent.OW_has_seen_residential = False
+
+>>>>>>> Stashed changes
 
 #######
 #IMAGES
@@ -111,6 +123,14 @@ init 5 python:
     "Going to all these places make feel uneasy, but I feel safe knowing you're with me.",
     "I wonder what secrets our friends were hiding... PG-13 secrets of course. Ahaha...",
     ]
+<<<<<<< Updated upstream
+=======
+
+#init python:
+    #OW_script_path = fom_getScriptFile(fallback = "game/submods/OpenWorld/")
+
+
+>>>>>>> Stashed changes
 #TODO: Create a randomized Monika pose eventually
 
 ########
@@ -244,6 +264,7 @@ label OW_warning:
     if persistent.OW_splash_screen_warning == False:
         call screen dialog(message="The following mod will contain scares and topics of the other girls.\nPlease don't play the mod if you are sensitive about that stuff.", ok_action=Return())
         $ persistent.OW_splash_screen_warning = True
+<<<<<<< Updated upstream
         $ _history_list.pop()
     menu:
         m 2wta "You want to show me something?{fast}"
@@ -252,6 +273,17 @@ label OW_warning:
             m 1sua "Huh? You want to take me somewhere?"
             m 6sublo "You must have added something while I was looking."
             m 6sublb "Alright, I can't wait to see what surpise you have for me, let's go."
+=======
+        m 2wta "You want to show me something?{nw}"
+        $ _history_list.pop()
+    menu:
+        m "You want to show me something?{fast}"
+        "Yes":
+            #Add expressions and change dialouge since we no longer start at MC's room
+            m 1sua "Huh? You want to take me somewhere?"
+            m 6sublo "You must have added something while I wasn't looking."
+            m 6sublb "Alright, I can't wait to see what surprise you have for me, let's go."
+>>>>>>> Stashed changes
             window hide
             stop music fadeout 4
             show black zorder 100 with Dissolve(5.0, alpha=True)
@@ -281,6 +313,11 @@ label OW_reset_persistent:
             $ persistent.OW_has_seen_outside = False
             $ persistent.OW_has_seen_sayori_room = False
             $ persistent.OW_has_seen_MC_kitchen =False
+<<<<<<< Updated upstream
+=======
+            $ persistent.OW_has_seen_residential_glitch = False
+            $ persistent.OW_has_seen_residential = False
+>>>>>>> Stashed changes
             jump ch30_loop
         "No":
             jump ch30_loop
