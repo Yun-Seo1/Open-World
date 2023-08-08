@@ -43,50 +43,90 @@ label OW_outside_mc_house:
             jump OW_outside_mc_house_talk
         "Interact":
             jump OW_outside_mc_house_interaction
-<<<<<<< Updated upstream
         "Return to [RTMAS.title()]":
-=======
-        "Return to [RTMAS]":
->>>>>>> Stashed changes
             call OW_Go_Back_To_Classroom
 
-##########################
+#####
 #Talk
-##########################
+#####
 label OW_outside_mc_house_talk:
-    show monika 5a_owawm at t11
-    m "You know I was given some other abilities if you want me to try it."
-    m "Are you okay with that?"
-    menu:
-        "Yes":
-            m 3b_owawm "Really?"
-            m "Thank you [player]! Come here."
-            show monika 5i_owawm at t11
-            show screen OW_monika_hug
-            m "Even though it's just your cursor, I can still feel your warmth... thank you [player] for everything you've given me."
-            window hide
-            pause 1.0
-            m "Sorry for holding onto your cursor for so long"
-            hide screen OW_monika_hug
-            m 8k_owawm "You have no idea how long I wanted to do something like this."
-            m 8l_owawm "Ehehe... I almost didn't want to let go."
-            jump OW_outside_mc_house
-        "No":
-            m 1p_owawm "Oh...okay..."
-            m 1o_owawm "I understand why you wouldn't let me."
-            m 1q_owawm "Maybe some other time..."
-            jump OW_outside_mc_house
+    $ Talk_topics = renpy.random.randint(1,2)
+    if Talk_topics == 1:
+        show monika 5a_owawm at t11
+        m "You know I was given some other abilities if you want me to try it."
+        m "Are you okay with that?"
+        menu:
+            "Yes":
+                m 3b_owawm "Really?"
+                m "Thank you [player]! Come here."
+                show monika 5i_owawm at t11
+                show screen OW_monika_hug
+                m "Even though it's just your cursor, I can still feel your warmth... thank you [player] for everything you've given me."
+                window hide
+                pause 1.0
+                m "Sorry for holding onto your cursor for so long"
+                hide screen OW_monika_hug
+                m 8k_owawm "You have no idea how long I wanted to do something like this."
+                m 8l_owawm "Ehehe... I almost didn't want to let go."
+                jump OW_outside_mc_house
+            "No":
+                m 1p_owawm "Oh...okay..."
+                m 1o_owawm "I understand why you wouldn't let me."
+                m 1q_owawm "Maybe some other time..."
+                jump OW_outside_mc_house
+    if Talk_topics == 2:
+        show monika 3p_owawm at t11
+        m "Hey [player]..."
+        m "Whatever you're doing to add back my world is concerning me a bit."
+        m 1l_owawm "I know you're putting a lot of effort into doing this but I'm worried about something else."
+        m 4o_owawm "Maybe it's better if I show you."
+        m 4q_owawm "Give me a second to search for it."
+        window hide
+        $ consolehistory = []
+        call updateconsole("/OpenWorld/characters/natsuki.chr", "Character found")
+        call updateconsole("/OpenWorld/characters/sayori.chr", "Character found")
+        call updateconsole("/OpenWorld/characters/yuri.chr", "Character found")
+        show monika 1p_owawm
+        pause 3.0
+        m "I don't know what caused them to come back."
+        m 1o_owawm "Maybe because this world is connected to them... {w=0.5}or maybe because of my deletion."
+        m "I know you've put a lot of effort by bringing back my world and I don't want to be rude."
+        m 2n_owawm "I wouldn't be so concerned but even with my console powers, I cannot delete them again without risking this world being destroyed again."
+        call updateconsole("delete /OpenWorld/characters/sayori.chr", "Error")
+        show screen tear(20, 0.1, 0.1, 0, 40)
+        play sound "sfx/s_kill_glitch1.ogg"
+        pause 0.2
+        stop sound
+        hide screen tear
+        show monika 1q_owawm at hop
+        m "EEEK!!"
+        m "..."
+        m 4o_owawm "I wish they would rest in peace..."
+        #change spaceroom with room title when it works
+        m 10p_owawm "Remember in the Spaceroom when I said I could feel their presence..."
+        m "I feel them more strongly now and I just hope they don't bother us."
+        call hideconsole
+        m 10l_owawm "I know it sounds a bit mean but "
+        extend 10q_owawm "{w=0.4}this is supposed to be {i}our {b}After Story{/b}{/i}."
+        m 7l_owawm "Sorry for talking so much "
+        extend 10i_owawm "but this is just something I bring to your attention."
+        show monika 5a_owawm at hop
+        m "I'm happy about everything else though. Seeing everything and having such an amazing time with my [OW_Gender()]."
+        m "It's almost perfect but you have to take the good with the bad right?"
+        window hide
+        play sound "sfx/giggle.ogg"
+        pause 1.5
+        jump OW_outside_mc_house
 
-##########################
+############
 #Interaction
-##########################
+############
 
 label OW_outside_mc_house_interaction:
     call screen OWAWM_outside()
     screen OWAWM_outside():
         imagemap:
             ground "bg/house.png"
-        #Location of the "Return" button
         zorder 50
         style_prefix "hkb"
         vbox:
@@ -114,13 +154,9 @@ label OW_outside_mc_house_interaction:
             xysize(125,None)
             xpos 1156
             ypos 465
-<<<<<<< Updated upstream
-            action Jump("OW_residential_beta") hover_sound gui.hover_sound
-=======
             if (persistent.OW_has_seen_residential_glitch == False):
                 action Jump("OW_residential_glitch") hover_sound gui.hover_sound
             action Jump("OW_go_to_residential") hover_sound gui.hover_sound
->>>>>>> Stashed changes
         textbutton ("Monika's House"):
             style "hkb_button"
             style_prefix "hkb"
@@ -129,11 +165,6 @@ label OW_outside_mc_house_interaction:
             ypos 362
             action Jump("OW_monika_house_beta") hover_sound gui.hover_sound
 
-<<<<<<< Updated upstream
-##########################
-#Leaving the area
-##########################
-=======
 ####################
 #Residential fakeout
 ####################
@@ -160,7 +191,7 @@ label OW_residential_glitch:
     call updateconsole("Call Residential","Error")
     m 8s_owawm "I'm not giving up!"
     call updateconsole("Call Residential","Error")
-    m 5b_owawm "Stupid console, work!"
+    m 5b_owawm "GRRR! Stupid console, work!"
     play sound "sfx/monikapound.ogg"
     show layer master:
         truecenter
@@ -186,7 +217,6 @@ label OW_residential_glitch:
 #################
 #Leaving the area
 #################
->>>>>>> Stashed changes
 
 label OW_back_to_mc_kitchen:
     m "Do you want to go back to {color=#000}[OW_mc]{/color}'s kitchen?{nw}"
@@ -217,31 +247,18 @@ label OW_go_to_sayori_room:
         "No":
             call screen OWAWM_outside()
 
-<<<<<<< Updated upstream
-label OW_residential_beta:
-    show screen tear(20, 0.1, 0.1, 0, 40)
-    play sound "sfx/s_kill_glitch1.ogg"
-    pause 0.2
-    stop sound
-    hide screen tear
-    show monika 1r_owawm at t11
-    show monika at hop
-    m "EEEK!!"
-    m 8s_owawm "This way has the same problem as well..."
-    m 4s_owawm "I'm going to check the game files for this as well."
-    window hide
-    $ consolehistory = []
-    call updateconsole("Call Residential","Version 0.0.X")
-    m 4d_owawm "Version 0.0.X?..."
-    show monika 1b_owawm at hop
-    m "That means this will get added soon. I wonder if more things will be added."
-    call hideconsole
-    m 5a_owawm "Maybe even my home as well! That's wishful thinking though."
-    m "I can't wait to see what gets added next. Let's check other places, okay [player]?"
-    call screen OWAWM_outside
-=======
+label OW_go_to_residential:
+    m "Do you want to go down the street?{nw}"
+    $ _history_list.pop()
+    menu:
+        m "Do you want to go down the street?{fast}"
+        "Yes":
+            scene bg residential_day with dissolve_scene_full
+            pause 2.0
+            jump OW_residential
+        "No":
+            call screen OWAWM_outside()
 
->>>>>>> Stashed changes
 
 label OW_monika_house_beta:
     show screen tear(20, 0.1, 0.1, 0, 40)
@@ -274,18 +291,4 @@ label OW_monika_house_beta:
     extend "something new is being adding to my world."
     m "Let's check other places instead, okay? Ehehe~"
     call screen OWAWM_outside
-<<<<<<< Updated upstream
-=======
 
-label OW_go_to_residential:
-    m "Do you want to go down the street?{nw}"
-    $ _history_list.pop()
-    menu:
-        m "Do you want to go down the street?{fast}"
-        "Yes":
-            scene bg residential_day with dissolve_scene_full
-            pause 2.0
-            jump OW_residential
-        "No":
-            call screen OWAWM_outside()
->>>>>>> Stashed changes

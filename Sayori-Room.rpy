@@ -64,7 +64,6 @@ label OW_sayori_room_interaction:
     screen OWAWM_sayori_room():
         imagemap:
             ground "bg/sayori_bedroom.png"
-            #Location of the "Return" button
             hotspot (739, 440, 213, 256) action Jump("OW_sayori_cow")
             hotspot (435, 466, 293, 156) action Jump("OW_sayori_bed")
             hotspot (61, 247, 86, 122) action Jump("OW_sayori_calendar")

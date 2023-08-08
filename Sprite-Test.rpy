@@ -110,11 +110,9 @@ label OW_Sprite_Test:
 #        t33 = 8
 #        t44 = 9
 #    ]
-<<<<<<< Updated upstream
-=======
 #     play sound "sfx/giggle.ogg" Monika giggle
+#     play sound "sfx/monikapound.ogg" Screen Pound
 
->>>>>>> Stashed changes
 
 
 label Testing_scroll_menu:
@@ -124,7 +122,7 @@ label Testing_scroll_menu:
             ("Testing console call", 'OW_console_test'),
             ("Music Test", 'OW_music_test'),
             ("Sayori Glitch", 'OW_glitched_sayori'),
-            ("Testing", 'OW_text'),
+            ("Sitting Test", 'OW_sitting_test'),
             ("Testing", 'OW_text'),
             ("Testing", 'OW_text'),
             ("Testing", 'OW_text'),
@@ -162,3 +160,17 @@ label OW_glitched_sayori:
         pause 1.0
         hide sayori
         jump Testing_scroll_menu
+
+label OW_sitting_test:
+    $ temp_clothing
+    $ is_sitting = True
+    show monika 1eua at ls32 zorder MAS_MONIKA_Z
+    pause 1.0
+    show monika 1eua at rs32 with dissolve_monika
+    pause 1.0
+    hide monika
+    pause 2.0
+    $ is_sitting = False
+    show monika 5a_owawm at ls32
+    pause 1.0
+    jump Testing_scroll_menu

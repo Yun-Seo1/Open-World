@@ -1,7 +1,6 @@
 # All Talk, interactions and other secrets should be in this file
 # Unless otherwise stated in another file
 
-
 label OW_Go_To_MC_Room:
     if persistent.OW_has_seen_MC_Room == False:
         show monika 8e_owawm at t11
@@ -38,9 +37,11 @@ label OW_Go_To_MC_Room:
 #High randint option to make some talk options rare
 #might change later on to just pick but just wanted that tiny bit of replayability
 #Goes up 5 for every custom talk option
-########################################
+
+#####
 #TALK
-########################################
+#####
+
 label OW_MC_Room_Talk:
     #call screen dialog(message="Error: No Talk options have been added", ok_action=Return())
     $ Talk_topics = renpy.random.randint(1,10)
@@ -96,9 +97,9 @@ label OW_MC_Room_Talk:
         jump OW_Go_To_MC_Room
 
 
-#################################
+############
 #INTERACTION 
-#################################
+############
 label OW_MC_Room_Interaction:
     hide monika
     call screen OWAWM_MC_ROOM()
@@ -108,26 +109,21 @@ label OW_MC_Room_Interaction:
             hotspot (111, 207, 102, 510) action Jump("OW_MC_Book_Shelfs")
             hotspot (565, 262, 151, 364) action Jump("OW_MC_Closet")
             hotspot (1103, 601, 175, 118) action Jump("OW_MC_Computer")
-            # hotspot (1123, 2, 156, 48) action Jump ("MC_Back_Button")
-#Buttons with no sound mean they are a secret
             hotspot (715, 547, 124, 44) action Jump("OW_MC_Secret_Jump_Scare")
-        #timer 30.0 action Show(screen="dialog", message="Click the top right corner to return.", ok_action=Hide("dialog"))
-#Location of the "Return" button
         zorder 50
         style_prefix "hkb"
         vbox:
             xpos 1123
             ypos 2
             textbutton ("Return") action [Hide("OWAWM_MC_ROOM"), Jump("OW_Go_To_MC_Room")] hover_sound gui.hover_sound
-#Location of button to go to another location (Some places will have 2-3)
         hbox:
             xpos 563
             ypos 680
             textbutton ("Kitchen") action Jump("OW_Leave_MC_Room") hover_sound gui.hover_sound
 
-############################
+###############
 #HOTSPOT LABELS
-############################
+###############
 label OW_MC_Book_Shelfs:
     narrator "[m_name] notices the cursor click on the Bookshelf"
     show monika 5a_owawm at t21
@@ -188,10 +184,9 @@ label OW_MC_computer_list:
     call screen OW_gen_list(computer_list,mas_ui.SCROLLABLE_MENU_TXT_LOW_AREA)
     return
 
-#List of labels for the computer
-##############################
+################
 #COMPUTER LABELS
-##############################
+################
 label OW_computer_rickroll:
     m 3u_owawm "Since this computer has internet access, I want to show you something."
     m "Give me a second to search for it."
@@ -207,11 +202,7 @@ label OW_computer_rickroll:
 label OW_monika_twitter:
     m 1b_owawm "Since this place has computer has internet, I can do something like this"
     pause 2.0
-<<<<<<< Updated upstream
-    $ webbrowser.open("https://twitter.com/lilmonix3?t=wuxtSo9WeHhFui91iEdSaA&s=33")
-=======
     $ renpy.run(OpenURL("https://twitter.com/lilmonix3?t=wuxtSo9WeHhFui91iEdSaA&s=33"))
->>>>>>> Stashed changes
     pause 2.0
     m 3l_owawm "...{w=1.0}Hope you're logged in to see it."
     m "I know I've said this isn't me but I don't mind directing you to her."
@@ -219,9 +210,9 @@ label OW_monika_twitter:
     m "Don't be scared my love, I won't hurt you, ahaha~"
     jump OW_MC_computer_list
 
-#########################
-#Kitchen exit
-#########################
+#############
+#Kitchen Exit
+#############
 label OW_Leave_MC_Room:
     hide screen OWAWM_MC_ROOM
     m "Do you want to go downstairs [player]?{nw}"
