@@ -88,7 +88,6 @@ define audio.dating_sim_loop = "Submods/OpenWorld/music/dumb_dating_sim_loop.mp3
 #############
 init 5 python:
     import os.path
-    import store
     def OW_Gender():
         temp_gender = "partner"
         if persistent.gender == "M":
@@ -120,9 +119,36 @@ init 5 python:
     "I wonder what secrets our friends were hiding... PG-13 secrets of course. Ahaha...",
     ]
     
+
 #init python:
     #OW_script_path = fom_getScriptFile(fallback = "game/submods/Open World/")
-
+#TODO: Make Monika appear in her default without erasing what the player
+#originally had
+#mas_hair_def = MASHair(
+#        "def",
+#        "def",
+#        MASPoseMap(
+#            default=True,
+#            use_reg_for_l=True
+#        ),
+#        entry_pp=store.mas_sprites._hair_def_entry,
+#        exit_pp=store.mas_sprites._hair_def_exit,
+#        ex_props={
+#            "ribbon": True,
+#            "ribbon-restore": True
+#        }
+#    )
+#    store.mas_sprites.init_hair(mas_hair_def)
+#    store.mas_selspr.init_selectable_hair(
+#        mas_hair_def,
+#        "Ponytail",
+#        "def",
+#        "hair",
+#        select_dlg=[
+#            "Do you like my ponytail, [player]?"
+#        ]
+#    )
+#    store.mas_selspr.unlock_hair(mas_hair_def)
 
 #TODO: Create a randomized Monika pose eventually
 
