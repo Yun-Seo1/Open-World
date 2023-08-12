@@ -2,6 +2,20 @@
 # "Open World" submod for Monika After Story:
 This mod allows you to take Monika back into her world after she deleted everything at the end of **Doki Doki Literature Club**. Not only that but you can click certain things in the environment and she'll take a look at it. However, because of her deletion, some corruption and some bugs will appear as you explore the world with her
 
+# Update v0.0.2 (8/18 maybe)
+Additions:
+New talks
+New clickables
+1 secret event
+Reworks:
+Persistent button will have a soft and hard reset
+Removed:
+Warning when opening the mod
+Planned:
+Unhard code images/sprites and files
+Add Auto update submod compatibility
+3 New areas (each with intros) 
+
 # BETA TEST:
 This is just a beta test and everything is subject to change
 
