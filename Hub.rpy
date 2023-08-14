@@ -7,7 +7,7 @@
 label OW_Start_Area:
     stop music
     hide black
-    scene TEST
+    scene bg TEST
     pause 0.75
     $ is_sitting = False
     show monika 5a_owawm at t11
@@ -43,6 +43,10 @@ label OW_Start_Area:
         "Monika's bedroom":
             call screen dialog(message="Error:Monika's room in progress", ok_action=Return())
             #call screen dialog(message="Error: No Talk options have been added", ok_action=Return())
+            jump OW_Start_Area
+        "OW Test Talk":
+            show monika 5a_owawm at h11
+            m "[OW_random_talk()]"
             jump OW_Start_Area
         "Secret Area 1":
             call screen dialog(message="Error: Secret Area in progress", ok_action=Return())

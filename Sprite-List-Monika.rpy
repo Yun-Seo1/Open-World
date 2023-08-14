@@ -296,5 +296,8 @@ image monika g2:
     repeat
 image chibika 1_owawm = im.Composite((960, 960), (425, 425), "Submods/OpenWorld/images/monika/m_sticker_1.png")
 image chibika 2_owawm = im.Composite((960, 960), (425, 425), "Submods/OpenWorld/images/monika/m_sticker_2.png")
+image chibika 3_owawm = im.Composite((960, 960), (425, 425), "Submods/OpenWorld/images/monika/y_sticker_1_broken.png")
+
 
 image sayori 1_owawm = im.Composite((960, 960), (0, 0), "sayori/1l.png", (0, 0), "sayori/1r.png", (325, 100), "sayori/noface1.png")
+

@@ -1,7 +1,6 @@
 label OW_Go_To_MC_Kitchen:
     if persistent.OW_has_seen_MC_kitchen == False:
-        show monika 1a_owawm at t11
-        show monika 1a_owawm at hop
+        show monika 1a_owawm at h11
         m "I forgot how furnished {color=#000}[OW_mc]{/color}'s kitchen was."
         m "Maybe I can finally practice baking like {color=#000}N[OW_natsuki]{/color} one of these days."
         m 10l_owawm "I'm not the best at cooking so I hope you don't mind burned food for a while."
@@ -10,9 +9,8 @@ label OW_Go_To_MC_Kitchen:
         m 1k_owawm "I'll be counting on you to teach me."
         $ persistent.OW_has_seen_MC_kitchen = True
     show monika 5a_owawm at t11
-    $ OW_talk = renpy.random.choice(OW_random_talk)
     menu:
-        m "[OW_talk]{fast}"
+        m "[OW_random_talk()]{fast}"
         "Talk":
             jump OW_MC_kitchen_talk
         "Interact":
@@ -25,13 +23,15 @@ label OW_Go_To_MC_Kitchen:
 
 label OW_MC_kitchen_talk:
     show monika 3e_owawm at t22
+    pause 0.5
     show monika at t21
+    pause 0.5
     show monika at t11
     m "What I wouldn't give to spend a morning in a place like this."
     m 1k_owawm "Both of us sitting at the dining table or counter, both of us sipping a cup of coffee while watching whatever is on the TV."
     m 4j_owawm "Or just enjoying each other's company."
     m 4t_owawm "Wouldn't that sound lovely [mas_get_player_nickname()]?"
-    show monika 5a_owawm at hop
+    show monika 5a_owawm at h11
     m "I hope you share the same feelings."
     jump OW_Go_To_MC_Kitchen
 
@@ -89,8 +89,7 @@ label OW_kitchen_convention_oven:
     pause 0.2
     stop sound
     hide screen tear
-    show monika 1r_owawm at t11
-    show monika at hop
+    show monika 1r_owawm at h11
     m "EEEK!!"
     m 1g_owawm "I guess that answers that."
     m 2f_owawm "I hope the oven still works, I do want to try baking like {color=#000}N[OW_natsuki]{/color} one day."
@@ -112,7 +111,7 @@ label OW_back_upstairs:
         "Yes":
             scene bg bedroom with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.MC_Room,loop = True, fadein = 1.0)
+            $ play_song(audio.MC_Room,loop = True, fadein = 0)
             jump OW_Go_To_MC_Room
         "No":
             call screen OWAWM_MC_KITCHEN()
@@ -125,7 +124,7 @@ label OW_go_outside_from_kitchen:
         "Yes":
             scene bg house with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.t3,loop = True, fadein = 1.0)
+            $ play_song(audio.t3,loop = True, fadein = 0)
             jump OW_outside_mc_house
         "No":
             call screen OWAWM_MC_KITCHEN()

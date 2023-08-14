@@ -23,9 +23,8 @@ label OW_Go_To_MC_Room:
         m 4t_owawm "Now let's see what MC's room has in store for us, ehehe~"
         $ persistent.OW_has_seen_MC_Room = True
     show monika 5a_owawm at t11
-    $ OW_talk = renpy.random.choice(OW_random_talk)
     menu:
-        m "[OW_talk]{fast}"
+        m "[OW_random_talk()]{fast}"
         "Talk":
             jump OW_MC_Room_Talk
         "Interact":
@@ -56,7 +55,7 @@ label OW_MC_Room_Talk:
         jump OW_Go_To_MC_Room
     elif Talk_topics == 2:
         m 3o_owawm "I've never actually been in {color=#000}[OW_mc]{/color}'s room before. I'm a bit surprised with what's in here."
-        m 9p_owawm "You already know how I feel about him since we've talked about him back in the [RTMAS.title()]."
+        m 9p_owawm "You already know how I feel about him since we've talked about him back in the Spaceroom." #change spaceroom
         m 9n_owawm "As someone as plain as {color=#000}[OW_mc]{/color}, his room has more life than he does. Ahaha."
         m "I know that sounds a bit rude but it's not like he was real, he was just a machine for you to control since you're the real person."
         m 9j_owawm "And I'm grateful to have someone as unique as you, ehehe~"
@@ -90,7 +89,7 @@ label OW_MC_Room_Talk:
         pass
     else:
         m 4b_owawm "I can't thank you enough [player] for recreating my world."
-        show monika 5a_owawm at hop
+        show monika 5a_owawm at h11
         m "I know I've stated in the past but I don't know where my home really is..."
         m 5c_owawm "It still feels surreal since I never came into this room in the original game."
         m 1b_owawm "Sorry I'm rambling again. I love you [player] and I hope our adventure will continue in your reality, ehehe~"
@@ -129,9 +128,9 @@ label OW_MC_Book_Shelfs:
     show monika 5a_owawm at t21
     pause 1.0
     m "I wonder what type of books{color=#000}[OW_mc]{/color} has. Maybe something I haven't read before"
-    show monika 5a_owawm at hop,t21
+    show monika 5a_owawm at h21
     pause 1.0
-    show monika 5a_owawm at hop,t21
+    show monika 5a_owawm at h21
     pause 1.0
     show monika 5b_owawm at t11
     m "*sigh* It's all blank or corrupted text. Maybe a side effect from my deletion or just a prop."
@@ -141,7 +140,7 @@ label OW_MC_Book_Shelfs:
 
 label OW_MC_Closet:
     narrator "[m_name] notices the cursor hover over {color=#000}[OW_mc]{/color}'s closet and goes over to check it"
-    show monika 5c_owawm at hop,t11
+    show monika 5c_owawm at h11
     m "I was also curious about what was in there as well."
     show monika 3m_owawm at t11
     m "I'm sure you aren't going to be surprised but there's nothing in there."
@@ -193,7 +192,7 @@ label OW_computer_rickroll:
     $ renpy.run(OpenURL("https://youtu.be/17mbkqV6IbI"))
     $ persistent.monika_rickroll = "Monika Rick Roll"
     pause 1.5
-    show monika 3k_owawm at hop
+    show monika 3k_owawm at h11
     m "Ahaha, I've seen online that this is some sort of prank."
     pause 1.0
     m 1l_owawm "Maybe it wasn't good, sorry about that."
@@ -221,7 +220,7 @@ label OW_Leave_MC_Room:
         m "Do you want to go downstairs [player]?{fast}"
         "Yes":
             scene bg kitchen with dissolve_scene_full
-            $ play_song(audio.deep_breaths,loop = True, fadein = 1.0)
+            $ play_song(audio.deep_breaths,loop = True, fadein = 0)
             pause 2.0
             jump OW_Go_To_MC_Kitchen
         "No":

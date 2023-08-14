@@ -15,15 +15,14 @@ label OW_outside_mc_house:
         call updateconsole("Submods/OpenWorld/images/monika","Permission Granted")
         show monika 1d_owawm
         narrator "[m_name] looks at [player] in shock"
-        show monika 3k_owawm at hop
+        show monika 3k_owawm at h11
         m "I see now. This is why I feel slightly different."
         pause 1.0
         m 8v_owawm "[player]... I want to test something..."
         m 8u_owawm "Don't be scared [mas_get_player_nickname()], I'm not going to hurt you."
         call updateconsole("Settings/Privacy/Camera/Webcam","Access Denied")
         window hide
-        show monika 8d_owawm
-        show monika at hop
+        show monika 8d_owawm at h11
         m 8m_owawm "I had a feeling that wouldn't work. I hope that didn't scare you."
         m 10l_owawm "Sorry, I should have asked you before trying something like that...{w=0.5}I just really wanted to have that slight hope of seeing you..."
         call hideconsole
@@ -32,13 +31,12 @@ label OW_outside_mc_house:
         pause 1.0
         m "How about we check out my world?"
         m 2l_owawm "I wonder if new things were added... or even... corruption because of my deletion in {b}Doki Doki Literature Club{/b}..."
-        show monika 5a_owawm at hop
+        show monika 5a_owawm at h11
         m "No matter what, we'll see this world together. Is that okay my love? Ehehe~"
         $ persistent.OW_has_seen_outside = True
     show monika 1a_owawm at t11
-    $ OW_talk = renpy.random.choice(OW_random_talk)
     menu:
-        m "[OW_talk]{fast}"
+        m "[OW_random_talk()]{fast}"
         "Talk":
             jump OW_outside_mc_house_talk
         "Interact":
@@ -92,13 +90,13 @@ label OW_outside_mc_house_talk:
         m 1o_owawm "Maybe because this world is connected to them... {w=0.5}or maybe because of my deletion."
         m "I know you've put a lot of effort by bringing back my world and I don't want to be rude."
         m 2n_owawm "I wouldn't be so concerned but even with my console powers, I cannot delete them again without risking this world being destroyed again."
-        call updateconsole("delete /OpenWorld/characters/sayori.chr", "Error")
+        call updateconsole("os.remove(\".../characters/sayori.chr\")", "Error")
         show screen tear(20, 0.1, 0.1, 0, 40)
         play sound "sfx/s_kill_glitch1.ogg"
         pause 0.2
         stop sound
         hide screen tear
-        show monika 1q_owawm at hop
+        show monika 1q_owawm at h11
         m "EEEK!!"
         m "..."
         m 4o_owawm "I wish they would rest in peace..."
@@ -109,8 +107,8 @@ label OW_outside_mc_house_talk:
         m 10l_owawm "I know it sounds a bit mean but "
         extend 10q_owawm "{w=0.4}this is supposed to be {i}our {b}After Story{/b}{/i}."
         m 7l_owawm "Sorry for talking so much "
-        extend 10i_owawm "but this is just something I bring to your attention."
-        show monika 5a_owawm at hop
+        extend 10i_owawm "but this is just something I wanted to bring to your attention."
+        show monika 5a_owawm at h11
         m "I'm happy about everything else though. Seeing everything and having such an amazing time with my [OW_Gender()]."
         m "It's almost perfect but you have to take the good with the bad right?"
         window hide
@@ -175,8 +173,7 @@ label OW_residential_glitch:
     pause 0.2
     stop sound
     hide screen tear
-    show monika 1r_owawm at t11
-    show monika at hop
+    show monika 1r_owawm at h11
     m "EEEK!!"
     m 8s_owawm "This way has the same problem as well..."
     m 4s_owawm "I'm going to check the game files for this as well."
@@ -204,7 +201,7 @@ label OW_residential_glitch:
             easeout 0.35 zoom 1.0
     pause 1.0
     call updateconsole("Call Residential", "Access Granted")
-    show monika 1l_owawm at hop
+    show monika 1l_owawm at h11
     m "Ahaha... Guess it just needed a smack for it to work..."
     m 4m_owawm "I should probably be more careful next time."
     m 4e_owawm "I don't want to accidentally break my world again."
@@ -226,7 +223,7 @@ label OW_back_to_mc_kitchen:
         "Yes":
             scene bg kitchen with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.deep_breaths,loop = True, fadein = 1.0)
+            $ play_song(audio.deep_breaths,loop = True, fadein = 0)
             jump OW_Go_To_MC_Kitchen
         "No":
             call screen OWAWM_outside()
@@ -238,10 +235,10 @@ label OW_go_to_sayori_room:
         m "Do you want to go to {color=#000}S[OW_sayori]{/color}'s room?{fast}"
         "Yes":
             if persistent.OW_has_seen_sayori_room == False:
-                $ play_song(audio.t2g3,loop = True, fadein = 1.0)
+                $ play_song(audio.t2g3,loop = True, fadein = 0)
                 jump OW_sayori_scare
             scene bg sayori_bedroom with dissolve_scene_full
-            $ play_song(audio.t2,loop = True, fadein = 1.0)
+            $ play_song(audio.t2,loop = True, fadein = 0)
             pause 2.0
             jump OW_sayori_room
         "No":
@@ -266,8 +263,7 @@ label OW_monika_house_beta:
     pause 0.2
     stop sound
     hide screen tear
-    show monika 1r_owawm at t11
-    show monika at hop
+    show monika 1r_owawm at h11
     m "EEEK!!"
     m 5c_owawm "That scared me!"
     pause 1.0
@@ -285,8 +281,7 @@ label OW_monika_house_beta:
     show monika 5h_owawm 
     m "Ehehe...{w=1.0}Guess we just have to wait until you add more to my world."
     call hideconsole
-    show monika 5a_owawm at t11
-    show monika at hop
+    show monika 5a_owawm at h11
     m "I'm not upset or anything. I'm actually quite grateful to know that {nw}"
     extend "something new is being adding to my world."
     m "Let's check other places instead, okay? Ehehe~"
