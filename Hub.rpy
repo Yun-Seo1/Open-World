@@ -51,6 +51,11 @@ label OW_Start_Area:
         "Secret Area 1":
             call screen dialog(message="Error: Secret Area in progress", ok_action=Return())
             jump OW_Start_Area
+        "School Gate":
+            scene bg school gate with dissolve_scene_full
+            show monika 5a_owawm at t11
+            pause 2.0
+            jump OW_Start_Area
         "Return":
             call OW_Go_Back_To_Classroom
             

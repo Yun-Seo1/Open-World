@@ -28,6 +28,7 @@ label OW_residential:
         pause 0.5
         m "And this time... {w=0.5}"
         extend 8u_owawm "You are completely in my league [mas_get_player_nickname()]~"
+        $ persistent.OW_has_seen_residential = True
 #Monika was probably the most popular girl in class--smart, beautiful, athletic. 
 #Basically, completely out of my league - DDLC 
     show monika 1a_owawm at t11
@@ -87,8 +88,8 @@ label OW_residential_interaction:
         zorder 50
         style_prefix "hkb"
         vbox:
-            xpos 1123
-            ypos 2
+            xpos 1166
+            ypos 0
             textbutton ("Return") action [Hide("OWAWM_residential"), Jump("OW_residential")] hover_sound gui.hover_sound
 
         textbutton("Neighborhood"):
@@ -98,7 +99,14 @@ label OW_residential_interaction:
             ypos 372
             xysize(160,None)
             action Jump("OW_go_to_neighborhood") hover_sound gui.hover_sound
-#fake bdos (711, 555, 17, 11)
+        textbutton("School Gate"):
+            style "hkb_button"
+            style_prefix "hkb"
+            xpos 1194
+            ypos 653
+            xysize(85,None)
+            action NullAction() hover_sound gui.hover_sound
+#(1211, 687)
 ###############
 #Hotspot Labels
 ###############

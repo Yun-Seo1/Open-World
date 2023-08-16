@@ -60,9 +60,23 @@ label OW_Sprite_Test:
             jump OW_Sprite_Test
         "Testing hop":
             #Makes Monika hop
-            show monika 5c_owawm at hop
+            show monika 5a_owawm at h41
             pause 1.0
-            show monika 5c_owawm at hop
+            show monika 5a_owawm at h31
+            pause 1.0
+            show monika 5a_owawm at h21
+            pause 1.0
+            show monika 5a_owawm at h42
+            pause 1.0
+            show monika 5a_owawm at h11
+            pause 1.0
+            show monika 5a_owawm at h43
+            pause 1.0
+            show monika 5a_owawm at h22
+            pause 1.0
+            show monika 5a_owawm at h33
+            pause 1.0
+            show monika 5a_owawm at h41
             pause 1.0
             jump OW_Sprite_Test
         "Test Monika hug":
@@ -123,13 +137,13 @@ label Testing_scroll_menu:
             ("Music Test", 'OW_music_test'),
             ("Sayori Glitch", 'OW_glitched_sayori'),
             ("Sitting Test", 'OW_sitting_test'),
-            ("Testing", 'OW_text'),
-            ("Testing", 'OW_text'),
-            ("Testing", 'OW_text'),
-            ("Testing", 'OW_text'),
-            ("Testing", 'OW_text'),
-            ("Testing", 'OW_text'),
-            ("Testing", 'OW_text'),
+            ("instant transition", 'OW_instant'),
+            ("s? position", 'OW_standing'),
+            ("f? position", 'OW_f_position'),
+            ("d? position", 'OW_d_position'),
+            ("l? position", 'OW_l_position'),
+            ("hf? position", 'OW_hf_position'),
+            ("Changing window style", 'OW_window_style'),
             ("Testing", 'OW_text'),
             ("Testing", 'OW_text'),
             ("Testing", 'OW_text'),
@@ -162,7 +176,7 @@ label OW_glitched_sayori:
         jump Testing_scroll_menu
 
 label OW_sitting_test:
-    $ temp_clothing
+    $ temp_clothes
     $ is_sitting = True
     show monika 1eua at ls32 zorder MAS_MONIKA_Z
     pause 1.0
@@ -173,4 +187,135 @@ label OW_sitting_test:
     $ is_sitting = False
     show monika 5a_owawm at ls32
     pause 1.0
+    jump Testing_scroll_menu
+
+label OW_instant:
+    show monika 5a_owawm at i41
+    pause 1.0
+    show monika 5a_owawm at i31
+    pause 1.0
+    show monika 5a_owawm at i21
+    pause 1.0
+    show monika 5a_owawm at i42
+    pause 1.0
+    show monika 5a_owawm at i11
+    pause 1.0
+    show monika 5a_owawm at i43
+    pause 1.0
+    show monika 5a_owawm at i22
+    pause 1.0
+    show monika 5a_owawm at i33
+    pause 1.0
+    show monika 5a_owawm at i41
+    pause 1.0
+    jump Testing_scroll_menu
+
+label OW_standing:
+    show monika 5a_owawm at s41
+    pause 1.0
+    show monika 5a_owawm at s31
+    pause 1.0
+    show monika 5a_owawm at s21
+    pause 1.0
+    show monika 5a_owawm at s42
+    pause 1.0
+    show monika 5a_owawm at s11
+    pause 1.0
+    show monika 5a_owawm at s43
+    pause 1.0
+    show monika 5a_owawm at s22
+    pause 1.0
+    show monika 5a_owawm at s33
+    pause 1.0
+    show monika 5a_owawm at s41
+    pause 1.0
+    jump Testing_scroll_menu
+
+label OW_f_position:
+    show monika 5a_owawm at f41
+    pause 1.0
+    show monika 5a_owawm at f31
+    pause 1.0
+    show monika 5a_owawm at f21
+    pause 1.0
+    show monika 5a_owawm at f42
+    pause 1.0
+    show monika 5a_owawm at f11
+    pause 1.0
+    show monika 5a_owawm at f43
+    pause 1.0
+    show monika 5a_owawm at f22
+    pause 1.0
+    show monika 5a_owawm at f33
+    pause 1.0
+    show monika 5a_owawm at f41
+    pause 1.0
+    jump Testing_scroll_menu
+label OW_d_position:
+    show monika 5a_owawm at d41
+    pause 1.0
+    show monika 5a_owawm at d31
+    pause 1.0
+    show monika 5a_owawm at d21
+    pause 1.0
+    show monika 5a_owawm at d42
+    pause 1.0
+    show monika 5a_owawm at d11
+    pause 1.0
+    show monika 5a_owawm at d43
+    pause 1.0
+    show monika 5a_owawm at d22
+    pause 1.0
+    show monika 5a_owawm at d33
+    pause 1.0
+    show monika 5a_owawm at d41
+    pause 1.0
+    jump Testing_scroll_menu
+
+label OW_l_position:
+    show monika 5a_owawm at l41
+    pause 1.0
+    show monika 5a_owawm at l31
+    pause 1.0
+    show monika 5a_owawm at l21
+    pause 1.0
+    show monika 5a_owawm at l42
+    pause 1.0
+    show monika 5a_owawm at l11
+    pause 1.0
+    show monika 5a_owawm at l43
+    pause 1.0
+    show monika 5a_owawm at l22
+    pause 1.0
+    show monika 5a_owawm at l33
+    pause 1.0
+    show monika 5a_owawm at l41
+    pause 1.0
+    jump Testing_scroll_menu
+
+label OW_hf_position:
+    show monika 5a_owawm at hf41
+    pause 1.0
+    show monika 5a_owawm at hf31
+    pause 1.0
+    show monika 5a_owawm at hf21
+    pause 1.0
+    show monika 5a_owawm at hf42
+    pause 1.0
+    show monika 5a_owawm at hf11
+    pause 1.0
+    show monika 5a_owawm at hf43
+    pause 1.0
+    show monika 5a_owawm at hf22
+    pause 1.0
+    show monika 5a_owawm at hf33
+    pause 1.0
+    show monika 5a_owawm at hf41
+    pause 1.0
+    jump Testing_scroll_menu
+    
+label OW_window_style:
+    $ style.say_window = style.window_monika
+    m 5a_owawm "testing"
+    $ style.say_window = style.window
     jump Testing_scroll_menu

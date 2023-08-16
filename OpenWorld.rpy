@@ -1,6 +1,7 @@
 ############
 #Submod info
 ############
+#TODO: Reminder to start moving to the new framework of MAS update
 #Submod made by Yun (Discord:yun_seo)(Reddit:u/Yun-Seo)
 #Register
 init -990 python:
@@ -8,20 +9,20 @@ init -990 python:
         author="Yun",
         name="Open World",
         description="A submod that allows you to take Monika to DDLC places and new ones.",
-        version="0.0.0" 
+        version="0.0.2",
     )
 
-#Submod updater
-#init -990 python:
+######################
+#Submod Updater Plugin
+######################
+#init -989 python:
 #    if store.mas_submod_utils.isSubmodInstalled("Submod Updater Plugin"):
 #        store.sup_utils.SubmodUpdater(
 #            submod="Open World",
 #            user_name="Yun-Seo1",
-#            repository_name="",
-#            update_dir="",
-#            redirected_files=(
-#                ""
-#            )
+#            repository_name="Open-World",
+#            tag_formatter="v0.0.2-beta"
+#            extraction_depth=1
 #        )
 ##########
 #VARIABLES
@@ -73,6 +74,11 @@ image bg TEST = "Submods/OpenWorld/images/test.png"
 # Destroyed_Doki_Hall was just used in the demostration only (BETA comment)
 image bg Destroyed_Doki_Hall = "Submods/OpenWorld/images/Destroyed_Doki_Hall.jpg"
 image bg spaceroom_alt = "Submods/OpenWorld/images/XQ587jv.png"
+image bg school gate = "Submods/OpenWorld/images/school_gate_2.jpg"
+
+#TODO: Day and night system using MAS's system
+#TODO: Add new transitions
+
 ######
 #MUSIC
 ######
@@ -89,6 +95,8 @@ define audio.dating_sim_loop = "Submods/OpenWorld/music/dumb_dating_sim_loop.mp3
 #############
 #PYTHON STUFF
 #############
+#init python:
+    #OW_script_path = fom_getScriptFile(fallback = "game/submods/Open World/")
 init 5 python:
     import os.path
     def OW_Gender():
@@ -109,6 +117,19 @@ init 5 python:
             pass
         else:
             renpy.call_screen("dialog", message="Dev Only", ok_action=Jump("mas_extra_menu_close"))
+    def OW_hard_reset():
+        persistent.OW_has_seen_fake_bsod = False
+        OW_soft_reset()
+        return
+    def OW_soft_reset():
+        persistent.monika_rickroll = "???"
+        persistent.OW_has_seen_MC_Room = False
+        persistent.OW_has_seen_outside = False
+        persistent.OW_has_seen_sayori_room = False
+        persistent.OW_has_seen_MC_kitchen =False
+        persistent.OW_has_seen_residential_glitch = False
+        persistent.OW_has_seen_residential = False
+        return
 #Add more lines eventually
     def OW_random_talk():
         O_temp_talk = [
@@ -116,20 +137,23 @@ init 5 python:
             "I'd love for you to be with me right now, ehehe~",
             "Did you want to ask me something?",
             "What should we do?",
-            #"Did you inspect everything thoroughly? Ahaha~",
+            "Did you inspect everything thoroughly? Ahaha~",
             #"Ah, did you open a menu? Sorry, I was too busy admiring what you've done for me.",
             "It feels a bit weird snooping into their homes but who's here to stop us? Ehehe~",
             "Going to all these places make feel uneasy, but I feel safe knowing you're with me.",
             "I wonder what secrets our friends were hiding... PG-13 secrets of course. Ahaha...",
+            "Wouldn't it be nice to just hold hands and walk around my world... after we find out what's causing these glitches that is.",
+
         ]
         O_temp_talk = renpy.random.choice(O_temp_talk)
         return O_temp_talk
-#TODO: Create a randomized Monika pose eventually
+
+
+#TODO: Create a randomized Monika pose
+#TODO: Create a system to delete files when using hard reset
 
 
 
-#init python:
-    #OW_script_path = fom_getScriptFile(fallback = "game/submods/Open World/")
 #TODO: Make Monika appear in her default without erasing what the player
 #originally had
 #mas_hair_def = MASHair(
@@ -272,8 +296,8 @@ screen OW_MENU():
             textbutton ("GitHub") action Jump("OW_github") hover_sound gui.hover_sound
             textbutton ("Return") action Jump("mas_extra_menu_close") hover_sound gui.hover_sound
     vbox: 
-        xpos 1123
-        ypos 2
+        xpos 1166
+        ypos 0
         textbutton ("Dev Only") action Jump("OW_go_to_hub") hover_sound gui.hover_sound
 
 #######
@@ -311,23 +335,38 @@ label OW_warning:
             m 6ekbld "It's okay, maybe some other time?"
             m 6ekblp "I really want to see what this is. I guess you can say it peaked my interest, ehehe~."
             jump ch30_loop
+
+#TODO: Needs fixing, will be kept off until further notice
+label OW_return_question:
+    m "Do you want to return to the [RTMAS]?{nw}"
+    $ _history_list.pop()
+    menu:
+        m "Do you want to return to the [RTMAS]?{fast}"
+        "Yes":
+            call OW_Go_Back_To_Classroom
+        "No":
+            return
+
 label OW_location_set:
 
 #######################
 #Reset persistent label
 #######################
 label OW_reset_persistent:
+    narrator "Reset Persistent{nw}"
+    $ _history_list.pop()
     menu:
-        narrator "Reset Persistent?"
+        narrator "Reset Persistent?{fast}"
         "Yes":
-            $ persistent.monika_rickroll = "???"
-            $ persistent.OW_has_seen_MC_Room = False
-            $ persistent.OW_has_seen_outside = False
-            $ persistent.OW_has_seen_sayori_room = False
-            $ persistent.OW_has_seen_MC_kitchen =False
-            $ persistent.OW_has_seen_residential_glitch = False
-            $ persistent.OW_has_seen_residential = False
-            jump ch30_loop
+            menu:
+                "Hard Reset":
+                    $ OW_hard_reset()
+                    jump ch30_loop
+                "Soft Reset":
+                    $ OW_soft_reset()
+                    jump ch30_loop
+                "Nevermind":
+                    jump OW_reset_persistent
         "No":
             jump ch30_loop
 

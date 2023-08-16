@@ -51,8 +51,8 @@ label OW_MC_Kitchen_Interaction:
         zorder 50
         style_prefix "hkb"
         vbox:
-            xpos 1123
-            ypos 2
+            xpos 1166
+            ypos 0
             textbutton ("Return") action [Hide("OWAWM_MC_KITCHEN"), Jump("OW_Go_To_MC_Kitchen")] hover_sound gui.hover_sound
         hbox:
             xpos 533
@@ -67,7 +67,7 @@ label OW_MC_Kitchen_Interaction:
 label OW_kitchen_fridge:
     show monika 1d_owawm at t31
     m "I wonder what food is in his fridge, but I'm not really expecting much."
-    hide monika
+    hide monika with dissolve
     m "Gosh, I was right."
     show monika 8s_owawm at t11
     m "The fridge is completely empty too!"

@@ -34,6 +34,7 @@ label OW_outside_mc_house:
         show monika 5a_owawm at h11
         m "No matter what, we'll see this world together. Is that okay my love? Ehehe~"
         $ persistent.OW_has_seen_outside = True
+
     show monika 1a_owawm at t11
     menu:
         m "[OW_random_talk()]{fast}"
@@ -42,6 +43,7 @@ label OW_outside_mc_house:
         "Interact":
             jump OW_outside_mc_house_interaction
         "Return to [RTMAS.title()]":
+            #call OW_return_question
             call OW_Go_Back_To_Classroom
 
 #####
@@ -128,8 +130,8 @@ label OW_outside_mc_house_interaction:
         zorder 50
         style_prefix "hkb"
         vbox:
-            xpos 1123
-            ypos 2
+            xpos 1166
+            ypos 0
             textbutton ("Return") action [Hide("OWAWM_outside"), Jump("OW_outside_mc_house")] hover_sound gui.hover_sound
 
         textbutton ("MC's House"):

@@ -71,8 +71,8 @@ label OW_sayori_room_interaction:
         zorder 50
         style_prefix "hkb"
         vbox:
-            xpos 1123
-            ypos 2
+            xpos 1166
+            ypos 0
             textbutton ("Return") action [Hide("OWAWM_sayori_room"), Jump("OW_sayori_room")] hover_sound gui.hover_sound
         hbox:
             xpos 533
