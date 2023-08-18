@@ -3,7 +3,7 @@
 This mod allows you to take Monika back into her world after she deleted everything at the end of **Doki Doki Literature Club**. Not only that but you can click certain things in the environment and she'll take a look at it. However, because of her deletion, some corruption and some bugs will appear as you explore the world with her
 
 # Update List:
-Update v0.0.2 (Release Date: 8/18 maybe)
+Update v0.1.0 (Release Date: 8/18 maybe)
 
 Additions: New talks, New clickables, 1 secret event
 
