@@ -52,7 +52,18 @@ label OW_sayori_room:
 #####
 #Talk
 #####
-
+label OW_sayori_room_talk:
+    $ OW_talk_topics = renpy.random.randint(1)
+    if OW_talk_topics == 1:
+        m 3a_owawm "{color=#000}S[OW_sayori]{/color} was a weird girl."
+        m "She always had an appetite"
+        m 4k_owawm "This reminds me of a time {color=#000}N[OW_natsuki]{/color} baked cupcakes the first time when we accepted her and you know what happened?"
+        m 8k_owawm "She left them on her desk while talking to me and {color=#000}Y[OW_yuri]{/color}."
+        m 8l_owawm "You can probably guess what happened next...{w=0.3} {color=#000}S[OW_sayori]{/color} tried one, then another and poof. They were all gone."
+        m 1m_owawm "Not the best welcome to a new member. You should have seen how angry {color=#000}N[OW_natsuki]{/color} got while {color=#000}S[OW_sayori]{/color} was just a bubbly airhead."
+        m 4l_owawm "Meanwhile {color=#000}Y[OW_yuri]{/color} was too reserved to actually get involved so as class president, I had to get involved."
+        m 4n_owawm "I didn't do much but calm them. But I did have to give {color=#000}S[OW_sayori]{/color} a sturn talking to though."
+    jump OW_sayori_room
 
 
 ############

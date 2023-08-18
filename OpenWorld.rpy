@@ -9,7 +9,7 @@ init -990 python:
         author="Yun",
         name="Open World",
         description="A submod that allows you to take Monika to DDLC places and new ones.",
-        version="0.0.2",
+        version="0.1.0",
     )
 
 ######################
@@ -21,7 +21,7 @@ init -990 python:
 #            submod="Open World",
 #            user_name="Yun-Seo1",
 #            repository_name="Open-World",
-#            tag_formatter="v0.0.2-beta"
+            #tag_formatter="beta2"
 #            extraction_depth=1
 #        )
 ##########
@@ -47,6 +47,9 @@ default OW_natsuki = glitchtext(12)
 default OW_gtext = glitchtext(50)
 define c = DynamicCharacter('c_name', image='chibika', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 default c_name = "???"
+
+default OW_talk_topics = None
+
 #Will Test at another time
 #default OW_corrupt = glitchtext(60)
 #default OW_file = mangleFile()
@@ -62,6 +65,8 @@ default persistent.OW_has_seen_MC_kitchen =False
 default persistent.OW_has_seen_residential_glitch = False
 default persistent.OW_has_seen_residential = False
 default persistent.OW_has_seen_fake_bsod = False
+default persistent.OW_has_seen_school_gate = False
+default persistent.OW_first_interference = False
 
 
 #######
@@ -84,13 +89,14 @@ image bg school gate = "Submods/OpenWorld/images/school_gate_2.jpg"
 ######
 #TODO: Create a music button so people can choose what they wish to listen to
 #Only for the music in the Open World mod though
-#Unless its possible for both music menus to be added
 #NOTE BETA: More songs will be added in the future, please bare with the limited selection
 define audio.MC_Room = "Submods/OpenWorld/music/idksomethingddlc.mp3"
 define audio.deep_breaths = "Submods/OpenWorld/music/Deep Breaths inst.mp3"
 define audio.alone_time = "Submods/OpenWorld/music/alonetime.ogg"
 define audio.dating_sim_loop = "Submods/OpenWorld/music/dumb_dating_sim_loop.mp3"
-
+define audio.street_stoll = "Submods/OpenWorld/music/main_street_stroll.ogg"
+define audio.street_stoll_remix = "Submods/OpenWorld/music/main_street_stroll_new_mix.ogg"
+define audio.monikas_conf = "Submods/OpenWorld/music/Monikas_confession.mp3" #Might go unused. Depends on how I feel about it later on
 
 #############
 #PYTHON STUFF
@@ -129,6 +135,8 @@ init 5 python:
         persistent.OW_has_seen_MC_kitchen =False
         persistent.OW_has_seen_residential_glitch = False
         persistent.OW_has_seen_residential = False
+        persistent.OW_has_seen_school_gate = False
+        persistent.OW_first_interference = False
         return
 #Add more lines eventually
     def OW_random_talk():
@@ -336,7 +344,12 @@ label OW_warning:
             m 6ekblp "I really want to see what this is. I guess you can say it peaked my interest, ehehe~."
             jump ch30_loop
 
-#TODO: Needs fixing, will be kept off until further notice
+#TODO: Needs fixing, will be kept off until further notice.
+#Test these two and see if they could be implimented 
+#store.mas_submod_utils.current_label:
+#    This variable holds the current label we're in
+#store.mas_submod_utils.last_label:
+#    This variable holds the last label we were in.
 label OW_return_question:
     m "Do you want to return to the [RTMAS]?{nw}"
     $ _history_list.pop()
@@ -347,6 +360,11 @@ label OW_return_question:
         "No":
             return
 
+
+
+
+#TODO: v0.0.3 for random act 3 room implementation
+#Need to make sure it have enough for people to enjoy
 label OW_location_set:
 
 #######################
@@ -420,6 +438,9 @@ label OW_Go_Back_To_Classroom:
     $ is_sitting = True
     jump ch30_loop
 
+
+
+#TODO: Create a new rpy and move these misc labels into those
 #############
 #Do not touch
 #############
@@ -442,6 +463,7 @@ label OW_first_act_3_visit:
         imagemap:
             ground "bg spaceroom_alt"
             hotspot (243, 603, 73, 35) action [Hide("OWAWM_act_3_one_time_use"), Jump("OW_first_act_3_visit_1")] hover_sound gui.hover_sound
+
 label OW_first_act_3_visit_1:            
     show monika 1q_owawm at s21
     m "..."
@@ -455,7 +477,7 @@ label OW_first_act_3_visit_1:
     m 1p_owawm "Huh?... [player]?"
     show monika 3o_owawm at f11
     m "What happened?... The last thing I remembered walking down the street with you... {w=0.8}"
-    extend 4h_owawm "and then it felt like I was in that void when you close the game with saying goodbye."
+    extend 4h_owawm "and then it felt like I was in that void when you close the game without saying goodbye."
     m 2l_owawm "I know you didn't close the game on me but it just felt similar."
     m 8h_owawm "But do you know what actually happened?"
     menu:
@@ -470,7 +492,7 @@ label OW_first_act_3_visit_1:
             m 5c_owawm "Sorry, I didn't quite catch what you said."
             pass
     m 2f_owawm "This is quite worrying [player]..."
-    m "I felt like something bad was going to happen before I suddenly woke up in that void... you don't believe it's... them, right?"
+    m "I felt like something bad was going to happen before I suddenly woke up in that void... you don't believe... it's... them, right?"
     m 8g_owawm "No... This felt like something different."
     narrator "Monika notices your cursor."
     m 1g_owawm "Oh no... your cursor is messed up... I hope you're ok as well."
@@ -487,7 +509,7 @@ label OW_first_act_3_visit_1:
     pause 1.0
     m 4l_owawm "Oh right, the big question... where are we?..."
     m 4m_owawm "It felt like the spaceroom when I first woke up but... it's not." #change spaceroom to location name later on
-    m 1d_owawm "Can you give me a second to look outside? It looks... beautiful."
+    m 1d_owawm "Can you give me a minute to look outside? It looks... beautiful."
     menu:
         "Sure [m_name]":
             pass
@@ -515,6 +537,7 @@ label OW_first_act_3_visit_1:
     menu:
         "{i}Follow Monika{/i}":
             pass
+    $ persistent.OW_has_seen_fake_bsod = True
     show black zorder 100 with Dissolve(5.0, alpha=True)
     stop music fadeout 4
     pause 4
@@ -527,6 +550,20 @@ label OW_first_act_3_visit_1:
 
 
     
+label OW_first_interference:
+    window hide
+    show black with dissolve_scene_full
+    c "..."
+    $ consolehistory = []
+    call updateconsole("os.remove(\"[You]\")","Error")
+    c "..."
+    call updateconsole("os.remove(\"/characters/monika.chr\")","Character file no longer exists")
+    c "..."
+    call hideconsole
+    window hide
+    $ mouse_visible = True
+    $ persistent.OW_first_interference = True
+    return
 
 
 

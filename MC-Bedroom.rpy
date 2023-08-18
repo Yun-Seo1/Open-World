@@ -43,8 +43,8 @@ label OW_Go_To_MC_Room:
 
 label OW_MC_Room_Talk:
     #call screen dialog(message="Error: No Talk options have been added", ok_action=Return())
-    $ Talk_topics = renpy.random.randint(1,10)
-    if Talk_topics == 1:
+    $ OW_talk_topics = renpy.random.randint(1,10)
+    if OW_talk_topics == 1:
         narrator "Testing"
         pause 2.0
         m 5c_owawm "Oh...? " 
@@ -53,14 +53,14 @@ label OW_MC_Room_Talk:
         m 5e_owawm "I bet they put that in on purpose just to throw us off. "
         extend 3h_owawm "I'll come up with something else to talk about next time."
         jump OW_Go_To_MC_Room
-    elif Talk_topics == 2:
+    elif OW_talk_topics == 2:
         m 3o_owawm "I've never actually been in {color=#000}[OW_mc]{/color}'s room before. I'm a bit surprised with what's in here."
         m 9p_owawm "You already know how I feel about him since we've talked about him back in the Spaceroom." #change spaceroom
         m 9n_owawm "As someone as plain as {color=#000}[OW_mc]{/color}, his room has more life than he does. Ahaha."
         m "I know that sounds a bit rude but it's not like he was real, he was just a machine for you to control since you're the real person."
         m 9j_owawm "And I'm grateful to have someone as unique as you, ehehe~"
         jump OW_Go_To_MC_Room
-    elif Talk_topics == 3:
+    elif OW_talk_topics == 3:
         window hide
         show monika 5d_owawm at t11
         pause 2.0
@@ -74,7 +74,7 @@ label OW_MC_Room_Talk:
         m "{cps=*2}We can spend the rest of our lives together, ehehe~{/cps}{nw}"
         $ _history_list.pop()
         jump OW_Go_To_MC_Room
-    elif Talk_topics == 4:
+    elif OW_talk_topics == 4:
         m 1m_owawm "Another topic? Hmm..."
         window hide
         show monika 8v_owawm at t11
@@ -85,7 +85,7 @@ label OW_MC_Room_Talk:
         m 8k_owawm "Ahaha, relax [player]. I'm only teasing you..." 
         extend 8t_owawm "well, just a little~"
         jump OW_Go_To_MC_Room
-    elif Talk_topics <= 5:
+    elif OW_talk_topics <= 5:
         pass
     else:
         m 4b_owawm "I can't thank you enough [player] for recreating my world."

@@ -50,8 +50,8 @@ label OW_outside_mc_house:
 #Talk
 #####
 label OW_outside_mc_house_talk:
-    $ Talk_topics = renpy.random.randint(1,2)
-    if Talk_topics == 1:
+    $ OW_talk_topics = renpy.random.randint(1,2)
+    if OW_talk_topics == 1:
         show monika 5a_owawm at t11
         m "You know I was given some other abilities if you want me to try it."
         m "Are you okay with that?"
@@ -74,7 +74,7 @@ label OW_outside_mc_house_talk:
                 m 1o_owawm "I understand why you wouldn't let me."
                 m 1q_owawm "Maybe some other time..."
                 jump OW_outside_mc_house
-    if Talk_topics == 2:
+    if OW_talk_topics == 2:
         show monika 3p_owawm at t11
         m "Hey [player]..."
         m "Whatever you're doing to add back my world is concerning me a bit."
@@ -157,7 +157,7 @@ label OW_outside_mc_house_interaction:
             if (persistent.OW_has_seen_residential_glitch == False):
                 action Jump("OW_residential_glitch") hover_sound gui.hover_sound
             action Jump("OW_go_to_residential") hover_sound gui.hover_sound
-        textbutton ("Monika's House"):
+        textbutton ("[OW_natsuki]"):
             style "hkb_button"
             style_prefix "hkb"
             xysize(120,None)
@@ -254,6 +254,7 @@ label OW_go_to_residential:
         "Yes":
             scene bg residential_day with dissolve_scene_full
             pause 2.0
+            $ play_song(audio.street_stoll,loop = True, fadein = 0)
             jump OW_residential
         "No":
             call screen OWAWM_outside()
@@ -275,11 +276,11 @@ label OW_monika_house_beta:
     window hide
     pause 1.0
     $ consolehistory = []
-    call updateconsole("Call Monika's House", "Access Denied")
+    call updateconsole("Accessing", "Access Denied")
     m 5f_owawm "Access Denied? Let me try it again."
     window hide
     pause 2.0
-    call updateconsole("Call Monika's House", "Access Denied")
+    call updateconsole("Accessing", "Access Denied")
     show monika 5h_owawm 
     m "Ehehe...{w=1.0}Guess we just have to wait until you add more to my world."
     call hideconsole
