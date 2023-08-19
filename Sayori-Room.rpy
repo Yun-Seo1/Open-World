@@ -5,6 +5,7 @@ label OW_sayori_scare:
     scene black with dissolve_scene_full
     hide monika
     narrator "[player] slowly walks into {color=#000}S[OW_sayori]{/color}'s home and walks upstairs."
+    pause 0.5
     narrator "[player] gently opens the door."
     hide black
     scene bg sayori_bedroom
@@ -21,16 +22,16 @@ label OW_sayori_scare:
     m 8k_owawm "Ahaha, don't be scared [mas_get_player_nickname()]"
     m 10l_owawm "I'm not saying I won't scare you again, I just want to appreciate seeing everything together for the first time."
     m 10m_owawm "I don't want to ruin these moments, but I just couldn't help it after.. you know."
-    show monika 5a_owawm at hop
+    show monika 5a_owawm at h11
     m "Anyways, let's take a look around okay? I'm sure {color=#000}S[OW_sayori]{/color} wouldn't mind."
     m "{cps=*2}Not like she can say anything about it anyways.{/cps}{nw}"
-    $ persistent.OW_has_seen_sayori_room = True
     show screen tear(20, 0.1, 0.1, 0, 40)
     play sound "sfx/s_kill_glitch1.ogg"
     pause 0.2
     stop sound
     hide screen tear
-    $ play_song(audio.t2,loop = True, fadein = 1.0)
+    $ play_song(audio.t2,loop = True, fadein = 0)
+    $ persistent.OW_has_seen_sayori_room = True
     jump OW_sayori_room
 #Wont replay unless persistent is reset
 #####
@@ -38,12 +39,10 @@ label OW_sayori_scare:
 #####
 label OW_sayori_room:
     show monika 1a_owawm at t11
-    $ OW_talk = renpy.random.choice(OW_random_talk)
     menu:
-        m "[OW_talk]{fast}"
+        m "[OW_random_talk()]{fast}"
         "Talk":
-            call screen dialog(message="Error: No Talk options have been added", ok_action=Return())
-            jump OW_sayori_room
+            jump OW_sayori_room_talk
         "Interact":
             jump OW_sayori_room_interaction
         "Return to [RTMAS.title()]":
@@ -52,7 +51,18 @@ label OW_sayori_room:
 #####
 #Talk
 #####
-
+label OW_sayori_room_talk:
+    $ OW_talk_topics = renpy.random.randint(1,2)
+    if OW_talk_topics == 1,2:
+        m 3a_owawm "{color=#000}S[OW_sayori]{/color} was a weird girl."
+        m "She always had an appetite"
+        m 4k_owawm "This reminds me of a time {color=#000}N[OW_natsuki]{/color} baked cupcakes the first time when we accepted her and you know what happened?"
+        m 8k_owawm "She left them on her desk while talking to me and {color=#000}Y[OW_yuri]{/color}."
+        m 8l_owawm "You can probably guess what happened next...{w=0.3} {color=#000}S[OW_sayori]{/color} tried one, then another and poof. They were all gone."
+        m 1m_owawm "Not the best welcome to a new member. You should have seen how angry {color=#000}N[OW_natsuki]{/color} got while {color=#000}S[OW_sayori]{/color} was just a bubbly airhead."
+        m 4l_owawm "Meanwhile {color=#000}Y[OW_yuri]{/color} was too reserved to actually get involved so as class president, I had to get involved."
+        m 4n_owawm "I didn't do much but calm them. But I did have to give {color=#000}S[OW_sayori]{/color} a sturn talking to though."
+    jump OW_sayori_room
 
 
 ############
@@ -64,7 +74,6 @@ label OW_sayori_room_interaction:
     screen OWAWM_sayori_room():
         imagemap:
             ground "bg/sayori_bedroom.png"
-            #Location of the "Return" button
             hotspot (739, 440, 213, 256) action Jump("OW_sayori_cow")
             hotspot (435, 466, 293, 156) action Jump("OW_sayori_bed")
             hotspot (61, 247, 86, 122) action Jump("OW_sayori_calendar")
@@ -72,8 +81,8 @@ label OW_sayori_room_interaction:
         zorder 50
         style_prefix "hkb"
         vbox:
-            xpos 1123
-            ypos 2
+            xpos 1166
+            ypos 0
             textbutton ("Return") action [Hide("OWAWM_sayori_room"), Jump("OW_sayori_room")] hover_sound gui.hover_sound
         hbox:
             xpos 533
@@ -85,7 +94,7 @@ label OW_sayori_room_interaction:
 #Hotspot labels
 ###############
 label OW_sayori_cow:
-    show monika 1d_owawm at hop, t22
+    show monika 1d_owawm at h22
     m "Oh hello Mr. Cow."
     show monika 1d_owawm at t11
     m "Gosh, I never thought I would interact with him."
@@ -120,7 +129,7 @@ label OW_sayori_bed:
     show screen OW_monika_hug
     m "Don't worry, I'll always be by your side~"
     hide screen OW_monika_hug
-    show monika 5a_owawm at hop
+    show monika 5a_owawm at h11
     m "Let's move on from this hard subject and enjoy my world again."
     call screen OWAWM_sayori_room()
 
@@ -149,7 +158,7 @@ label OW_sayori_secret_scare:
     m "Is something wrong [player]?"
     m "I was busy looking out the window."
     m 1g_owawm "Don't be scared [player], I'm here to protect you."
-    show monika 5a_owawm at hop
+    show monika 5a_owawm at h11
     m "I won't let anything happen to my [mas_get_player_nickname()]."
     call screen OWAWM_sayori_room()
 
@@ -164,7 +173,7 @@ label OW_go_outside_from_sayori_room:
         m "Do you want to go outside [player]?{fast}"
         "Yes":
             scene bg house with dissolve_scene_full
-            $ play_song(audio.t3,loop = True, fadein = 1.0)
+            $ play_song(audio.t3,loop = True, fadein = 0)
             pause 2.0
             jump OW_outside_mc_house
         "No":

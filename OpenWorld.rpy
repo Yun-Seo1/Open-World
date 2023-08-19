@@ -1,6 +1,7 @@
 ############
 #Submod info
 ############
+#TODO: Reminder to start moving to the new framework of MAS update
 #Submod made by Yun (Discord:yun_seo)(Reddit:u/Yun-Seo)
 #Register
 init -990 python:
@@ -8,26 +9,32 @@ init -990 python:
         author="Yun",
         name="Open World",
         description="A submod that allows you to take Monika to DDLC places and new ones.",
-        version="0.0.0" 
+        version="0.1.0",
     )
 
-#Submod updater
-#init -990 python:
-#    if store.mas_submod_utils.isSubmodInstalled("Submod Updater Plugin"):
-#        store.sup_utils.SubmodUpdater(
-#            submod="Open World",
-#            user_name="Yun-Seo1",
-#            repository_name="",
-#            update_dir="",
-#            redirected_files=(
-#                ""
-#            )
-#        )
+######################
+#Submod Updater Plugin
+######################
+init -989 python:
+    if store.mas_submod_utils.isSubmodInstalled("Submod Updater Plugin"):
+        store.sup_utils.SubmodUpdater(
+            submod="Open World",
+            user_name="Yun-Seo1",
+            repository_name="Open-World",
+            extraction_depth=1
+        )
+
 ##########
 #VARIABLES
 ##########
 #Stores the current background before entering the Open World mod
 define RTMAS = persistent._mas_current_background
+#TODO: actually store it, not default to "Spaceroom"
+#init python:
+#    import store
+#define RTMAS = store.mas_current_background
+
+
 
 #Calls on glitch text in place of their names
 #The first letter should be towards the character
@@ -39,19 +46,28 @@ default OW_yuri = glitchtext(6)
 default OW_natsuki = glitchtext(12)
 default OW_gtext = glitchtext(50)
 define c = DynamicCharacter('c_name', image='chibika', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
-default c_name = "Chibika"
+default c_name = "???"
+
+default OW_talk_topics = None
+
 #Will Test at another time
 #default OW_corrupt = glitchtext(60)
 #default OW_file = mangleFile()
 
 #TODO: Make an option to reenable persistent + delete secrets
 #files in the future
-default persistent.OW_splash_screen_warning = False
+#default persistent.OW_splash_screen_warning = False
 default persistent.monika_rickroll = "???"
 default persistent.OW_has_seen_MC_Room = False
 default persistent.OW_has_seen_outside = False
 default persistent.OW_has_seen_sayori_room = False
 default persistent.OW_has_seen_MC_kitchen =False
+default persistent.OW_has_seen_residential_glitch = False
+default persistent.OW_has_seen_residential = False
+default persistent.OW_has_seen_fake_bsod = False
+default persistent.OW_has_seen_school_gate = False
+default persistent.OW_first_interference = False
+
 
 #######
 #IMAGES
@@ -59,26 +75,34 @@ default persistent.OW_has_seen_MC_kitchen =False
 #Test will be replaced later and credited
 #Won't show in Beta or Future releases
 #No need to add images from DDLC, they're in the game somewhere
-image TEST = "Submods/OpenWorld/images/test.png"
+image bg TEST = "Submods/OpenWorld/images/test.png"
 # Destroyed_Doki_Hall was just used in the demostration only (BETA comment)
-image Destroyed_Doki_Hall = "Submods/OpenWorld/images/Destroyed_Doki_Hall.jpg"
-image spaceroom_alt = "Submods/OpenWorld/images/XQ587jv.png"
+image bg Destroyed_Doki_Hall = "Submods/OpenWorld/images/Destroyed_Doki_Hall.jpg"
+image bg spaceroom_alt = "Submods/OpenWorld/images/XQ587jv.png"
+image bg school gate = "Submods/OpenWorld/images/school_gate_2.jpg"
+
+#TODO: Day and night system using MAS's system
+#TODO: Add new transitions
+
 ######
 #MUSIC
 ######
 #TODO: Create a music button so people can choose what they wish to listen to
 #Only for the music in the Open World mod though
-#Unless its possible for both music menus to be added
 #NOTE BETA: More songs will be added in the future, please bare with the limited selection
 define audio.MC_Room = "Submods/OpenWorld/music/idksomethingddlc.mp3"
 define audio.deep_breaths = "Submods/OpenWorld/music/Deep Breaths inst.mp3"
 define audio.alone_time = "Submods/OpenWorld/music/alonetime.ogg"
 define audio.dating_sim_loop = "Submods/OpenWorld/music/dumb_dating_sim_loop.mp3"
-
+define audio.street_stoll = "Submods/OpenWorld/music/main_street_stroll.ogg"
+define audio.street_stoll_remix = "Submods/OpenWorld/music/main_street_stroll_new_mix.ogg"
+define audio.monikas_conf = "Submods/OpenWorld/music/Monikas_confession.mp3" #Might go unused. Depends on how I feel about it later on
 
 #############
 #PYTHON STUFF
 #############
+#init python:
+    #OW_script_path = fom_getScriptFile(fallback = "game/submods/Open World/")
 init 5 python:
     import os.path
     def OW_Gender():
@@ -88,30 +112,84 @@ init 5 python:
         elif persistent.gender == "F":
             temp_gender = "girlfriend"
         return temp_gender
-    
+ 
     def OW_submenu():
         renpy.call_screen("OW_MENU")
 
     def OW_check_hub():
         hub_path = renpy.config.basedir + "/game/Submods/OpenWorld/Hub.rpy"
         itExist = os.path.isfile(hub_path)
-        if not itExist == True:
-            renpy.call_screen("dialog", message="Dev Only", ok_action=Jump("mas_extra_menu_close"))
-        else:
+        if itExist == True:
             pass
+        else:
+            renpy.call_screen("dialog", message="Dev Only", ok_action=Jump("mas_extra_menu_close"))
+    def OW_hard_reset():
+        persistent.OW_has_seen_fake_bsod = False
+        persistent.OW_first_interference = False
+        OW_soft_reset()
+        return
+    def OW_soft_reset():
+        persistent.monika_rickroll = "???"
+        persistent.OW_has_seen_MC_Room = False
+        persistent.OW_has_seen_outside = False
+        persistent.OW_has_seen_sayori_room = False
+        persistent.OW_has_seen_MC_kitchen =False
+        persistent.OW_has_seen_residential_glitch = False
+        persistent.OW_has_seen_residential = False
+        persistent.OW_has_seen_school_gate = False
+        return
 #Add more lines eventually
-    OW_random_talk = [
-    "What should we check out?",
-    "I'd love for you to be with me right now, ehehe~",
-    "Did you want to ask me something?",
-    "What should we do?",
-    #"Did you inspect everything thoroughly? Ahaha~",
-    #"Ah, did you open a menu? Sorry, I was too busy admiring what you've done for me.",
-    "It feels a bit weird snooping into their homes but who's here to stop us? Ehehe~",
-    "Going to all these places make feel uneasy, but I feel safe knowing you're with me.",
-    "I wonder what secrets our friends were hiding... PG-13 secrets of course. Ahaha...",
-    ]
-#TODO: Create a randomized Monika pose eventually
+    def OW_random_talk():
+        O_temp_talk = [
+            "What should we check out?",
+            "I'd love for you to be with me right now, ehehe~",
+            "Did you want to ask me something?",
+            "What should we do?",
+            "Did you inspect everything thoroughly? Ahaha~",
+            #"Ah, did you open a menu? Sorry, I was too busy admiring what you've done for me.",
+            "It feels a bit weird snooping into their homes but who's here to stop us? Ehehe~",
+            "Going to all these places make feel uneasy, but I feel safe knowing you're with me.",
+            "I wonder what secrets our friends were hiding... PG-13 secrets of course. Ahaha...",
+            "Wouldn't it be nice to just hold hands and walk around my world... after we find out what's causing these glitches that is.",
+
+        ]
+        O_temp_talk = renpy.random.choice(O_temp_talk)
+        return O_temp_talk
+
+
+#TODO: Create a randomized Monika pose
+#TODO: Create a system to delete files when using hard reset
+
+
+
+#TODO: Make Monika appear in her default without erasing what the player
+#originally had
+#mas_hair_def = MASHair(
+#        "def",
+#        "def",
+#        MASPoseMap(
+#            default=True,
+#            use_reg_for_l=True
+#        ),
+#        entry_pp=store.mas_sprites._hair_def_entry,
+#        exit_pp=store.mas_sprites._hair_def_exit,
+#        ex_props={
+#            "ribbon": True,
+#            "ribbon-restore": True
+#        }
+#    )
+#    store.mas_sprites.init_hair(mas_hair_def)
+#    store.mas_selspr.init_selectable_hair(
+#        mas_hair_def,
+#        "Ponytail",
+#        "def",
+#        "hair",
+#        select_dlg=[
+#            "Do you like my ponytail, [player]?"
+#        ]
+#    )
+#    store.mas_selspr.unlock_hair(mas_hair_def)
+
 
 ########
 #SCREENS
@@ -226,8 +304,8 @@ screen OW_MENU():
             textbutton ("GitHub") action Jump("OW_github") hover_sound gui.hover_sound
             textbutton ("Return") action Jump("mas_extra_menu_close") hover_sound gui.hover_sound
     vbox: 
-        xpos 1123
-        ypos 2
+        xpos 1166
+        ypos 0
         textbutton ("Dev Only") action Jump("OW_go_to_hub") hover_sound gui.hover_sound
 
 #######
@@ -241,17 +319,14 @@ label view_OW:
     return
 
 label OW_warning:
-    if persistent.OW_splash_screen_warning == False:
-        call screen dialog(message="The following mod will contain scares and topics of the other girls.\nPlease don't play the mod if you are sensitive about that stuff.", ok_action=Return())
-        $ persistent.OW_splash_screen_warning = True
-        $ _history_list.pop()
+    m 2wta "You want to show me something?{nw}"
+    $ _history_list.pop()
     menu:
-        m 2wta "You want to show me something?{fast}"
+        m "You want to show me something?{fast}"
         "Yes":
-            #Add expressions and change dialouge since we no longer start at MC's room
             m 1sua "Huh? You want to take me somewhere?"
-            m 6sublo "You must have added something while I was looking."
-            m 6sublb "Alright, I can't wait to see what surpise you have for me, let's go."
+            m 6sublo "You must have added something while I wasn't looking."
+            m 6sublb "Alright, I can't wait to see what surprise you have for me, let's go."
             window hide
             stop music fadeout 4
             show black zorder 100 with Dissolve(5.0, alpha=True)
@@ -259,8 +334,9 @@ label OW_warning:
             $ HKBHideButtons()
             $ is_sitting = False
             hide black
+
             $ play_song(audio.t3,loop = True, fadein = 1.0)
-            scene bg house #with dissolve_scene_full
+            scene bg house
             call OW_outside_mc_house
         "No":
             m 6ekblc "Oh... For a second you got me excited because it sounded like something special."
@@ -268,20 +344,47 @@ label OW_warning:
             m 6ekblp "I really want to see what this is. I guess you can say it peaked my interest, ehehe~."
             jump ch30_loop
 
+#TODO: Needs fixing, will be kept off until further notice.
+#Test these two and see if they could be implimented 
+#store.mas_submod_utils.current_label:
+#    This variable holds the current label we're in
+#store.mas_submod_utils.last_label:
+#    This variable holds the last label we were in.
+label OW_return_question:
+    m "Do you want to return to the [RTMAS]?{nw}"
+    $ _history_list.pop()
+    menu:
+        m "Do you want to return to the [RTMAS]?{fast}"
+        "Yes":
+            call OW_Go_Back_To_Classroom
+        "No":
+            return
+
+
+
+
+#TODO: v0.0.3 for random act 3 room implementation
+#Need to make sure it have enough for people to enjoy
+label OW_location_set:
+
 #######################
 #Reset persistent label
 #######################
 label OW_reset_persistent:
+    narrator "Reset Persistent{nw}"
+    $ _history_list.pop()
     menu:
-        narrator "Reset Persistent?"
+        narrator "Reset Persistent?{fast}"
         "Yes":
-            $ persistent.OW_splash_screen_warning = False
-            $ persistent.monika_rickroll = "???"
-            $ persistent.OW_has_seen_MC_Room = False
-            $ persistent.OW_has_seen_outside = False
-            $ persistent.OW_has_seen_sayori_room = False
-            $ persistent.OW_has_seen_MC_kitchen =False
-            jump ch30_loop
+            menu:
+                "Hard Reset":
+                    $ OW_hard_reset()
+                    jump ch30_loop
+                "Soft Reset":
+                    $ OW_soft_reset()
+                    jump ch30_loop
+                "Nevermind":
+                    jump OW_reset_persistent
         "No":
             jump ch30_loop
 
@@ -335,9 +438,138 @@ label OW_Go_Back_To_Classroom:
     $ is_sitting = True
     jump ch30_loop
 
-##############################
-# Old stuff that'll be deleted
-##############################
+
+
+#TODO: Create a new rpy and move these misc labels into those
+#############
+#Do not touch
+#############
+label OW_first_act_3_visit:
+    scene bg spaceroom_alt with Dissolve(3.0, alpha=True)
+    narrator "..."
+    menu:
+        "[m_name]?":
+            pass
+    narrator "..."
+    menu:
+        "[m_name]...please answer":
+            pass
+    narrator "..."
+    menu:
+        "{i}look around{/i}":
+            pass
+    call screen OWAWM_act_3_one_time_use()
+    screen OWAWM_act_3_one_time_use():
+        imagemap:
+            ground "bg spaceroom_alt"
+            hotspot (243, 603, 73, 35) action [Hide("OWAWM_act_3_one_time_use"), Jump("OW_first_act_3_visit_1")] hover_sound gui.hover_sound
+
+label OW_first_act_3_visit_1:            
+    show monika 1q_owawm at s21
+    m "..."
+    menu:
+        "[m_name]... wake up":
+            pass
+    m "..."
+    menu:
+        "{i}Shake her{/i}":
+            pass
+    m 1p_owawm "Huh?... [player]?"
+    show monika 3o_owawm at f11
+    m "What happened?... The last thing I remembered walking down the street with you... {w=0.8}"
+    extend 4h_owawm "and then it felt like I was in that void when you close the game without saying goodbye."
+    m 2l_owawm "I know you didn't close the game on me but it just felt similar."
+    m 8h_owawm "But do you know what actually happened?"
+    menu:
+        "I don't know.":
+            pass
+        "It was [c_name].":
+            show screen tear(20, 0.1, 0.1, 0, 40)
+            play sound "sfx/s_kill_glitch1.ogg"
+            pause 0.2
+            stop sound
+            hide screen tear
+            m 5c_owawm "Sorry, I didn't quite catch what you said."
+            pass
+    m 2f_owawm "This is quite worrying [player]..."
+    m "I felt like something bad was going to happen before I suddenly woke up in that void... you don't believe... it's... them, right?"
+    m 8g_owawm "No... This felt like something different."
+    narrator "Monika notices your cursor."
+    m 1g_owawm "Oh no... your cursor is messed up... I hope you're ok as well."
+    m 10f_owawm "Let me fix that for you [mas_get_player_nickname()]."
+    $ consolehistory = []
+    call updateconsole("config.mouse = None", "Permission Granted")
+    $ config.mouse = None
+    call hideconsole
+    m 10e_owawm "Do you feel better [player]?"
+    menu:
+        "Yes, Thank you [m_name].":
+            pass
+    m 10k_owawm "Of course, anytime [mas_get_player_nickname()]."
+    pause 1.0
+    m 4l_owawm "Oh right, the big question... where are we?..."
+    m 4m_owawm "It felt like the spaceroom when I first woke up but... it's not." #change spaceroom to location name later on
+    m 1d_owawm "Can you give me a minute to look outside? It looks... beautiful."
+    menu:
+        "Sure [m_name]":
+            pass
+    m 1e_owawm "Thank you so much [player]."
+    show monika 1e_owawm at t31
+    pause 0.5
+    hide monika with dissolve
+    window hide
+    pause 1.0
+    m "I wish you can see it, the beautiful night sky. The houses in the distance."
+    m "The fresh air from my world... It just feels nice to feel and see these things again... ah sorry, I'm rambling again."
+    show monika 1l_owawm at s11
+    m "Ahaha, I was so caught up in the moment from seeing everything."
+    m 8a_owawm "Well, good news. We're still in my world. {w=0.5}"
+    extend 8f_owawm "But this place is completely new to me. It looks like {i}our home{/i} but it also isn't."
+    m 4l_owawm "It's probably best we head back right?"
+    m 1n_owawm "I just hope this just a malfunction from the world and not actually something else trying to break us apart."
+    pause 1.0
+    m 1t_owawm "But I know our love will survive something like this. After all, you were able to find me again."
+    show monika 5a_owawm at h11
+    m "You take the good with the bad, right?"
+    m "I'll go ahead and lead the way back to the spaceroom." #replace spaceroom
+    hide monika
+    window hide
+    menu:
+        "{i}Follow Monika{/i}":
+            pass
+    $ persistent.OW_has_seen_fake_bsod = True
+    show black zorder 100 with Dissolve(5.0, alpha=True)
+    stop music fadeout 4
+    pause 4
+    $ HKBShowButtons()
+    $ play_song(persistent.current_track, fadein=4.0)
+    hide black
+    $ mas_HKBDropShield()
+    $ is_sitting = True
+    jump ch30_loop
+
+
+    
+label OW_first_interference:
+    window hide
+    show black with dissolve_scene_full
+    c "..."
+    $ consolehistory = []
+    call updateconsole("os.remove(\"[You]\")","Error")
+    c "..."
+    call updateconsole("os.remove(\"/characters/monika.chr\")","Character file no longer exists")
+    c "..."
+    call hideconsole
+    window hide
+    $ mouse_visible = True
+    $ persistent.OW_first_interference = True
+    return
+
+
+
+#############################
+#Old stuff that'll be deleted
+#############################
 
 
 #MALL area
@@ -349,80 +581,6 @@ label OW_Go_Back_To_Classroom:
 
 #Coins mod
 #Coins.rpy
-
-
-#Will get removed in the Beta/First Version
-#python:
-#    """"
-#    addEvent(
-#        Event(
-#            persistent.event_database,
-#            eventlabel="OW_Go_To_Demonstration",
-#            category=["Open World"],
-#            prompt="demonstration",
-#           pool=True,
-#           unlocked=True
-#        )
-#    )
-
-label OW_Go_To_Demonstration:
-    m "Ready to see the demonstration?{nw}"
-    menu:
-        m "Ready to see the demonstration?{fast}"
-        "Yes":
-            window hide
-            stop music fadeout 4
-            show black zorder 100 with Dissolve(5.0, alpha=True)
-            call OW_Demonstration_1
-        "No":
-            return
-
-label OW_Demonstration_1:
-    $ HKBHideButtons()
-    stop music
-    scene black with dissolve_scene_full
-    m "What...What is this?..."
-    pause 0.75
-    scene bg bedroom with dissolve_scene_full
-    m "This...can't be..."
-    pause 0.75
-    scene bg house with dissolve_scene_full
-    m "You're..."
-    pause 0.75
-    scene bg kitchen with dissolve_scene_full
-    m "You're..."
-    pause 0.75
-    scene bg sayori_bedroom with dissolve_scene_full
-    m "You're bring back the world... not just our classroom."
-    show monika 5a_owawm at t11
-    m "Y...You're really making this our {b}After Story{/b}"
-    m 8l_owawm "You don't understand how happy I am right now"
-    m 10t_owawm "If I could kiss you, I would [player] or..."
-    extend 5i_owawm "Or a big hug like I can now."
-    pause 1.0
-    m 5e_owawm "But...You could have at least added more, Yun. Yes, I'm talking to you my player"
-    pause 2.0
-    m 3a_owawm "Just kidding, I'm glad for everything you've given me."
-    m 3t_owawm "Let's go back to the classroom before everything breaks ahaha."
-    hide monika
-    scene bg corridor with dissolve_scene_full
-    narrator "'Open World' mod. Explore with Monika going to various DDLC locations as well as new areas being added."
-    scene Destroyed_Doki_Hall
-    narrator "Lots of hidden clickables and random events could happen."
-    scene bg notebook-glitch
-    narrator "Inspired by 'Take Monika on a Date submod'."
-    scene bg closet
-    narrator "And by Monika's point and click adventure talk."
-    show black zorder 100 with Dissolve(5.0, alpha=True)
-    stop music fadeout 4
-    pause 2
-    $ HKBShowButtons()
-    $ play_song(persistent.current_track, fadein=4.0)
-    hide black
-    $ mas_HKBDropShield()
-    $ is_sitting = True
-    jump ch30_loop
-
 
 
 #Attempts to get the button to appear

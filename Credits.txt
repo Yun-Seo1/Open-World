@@ -16,12 +16,17 @@ Submods\OpenWorld\images
 Credits:
 Destroyed_Doki_Hall by Shane Wallis
 XQ587jv.png by Alex [ORG]#9077
+music_screen.png by TheMelodyofGaming#7515
+school_gate_2.jpg by https://lemmasoft.renai.us/forums/viewtopic.php?t=17302
 All other images uncredited are by Team Salvato
-
+monika_ddlc_casual_sprites_v_2__remake.png by GwendolyX10
 Submods\OpenWorld\music
 Credits: 
 idksomethingddlc.mp3 by Chunky✨💻#2643
 Deep Breaths inst.mp3 by Team TBD
 dumb_dating_sim_loop.mp3 by draven r stedman
 alonetime.ogg by LeoDeCraprio#4239
+main_street_stroll_new_mix.ogg by LeoDeCraprio#4239
+main_street_stroll.ogg by LeoDeCraprio#4239
+Monikas_confession.mp3 Goro#8350
 All other songs uncredited are by Team Salvato
