@@ -7,6 +7,10 @@ Update v0.2.0 (Release Date: TBA)
 
 Planned: Unhard code images/sprites and files
 
+Update v0.1.2 (Release Date: TBA)
+
+Fixing the third option "Return to Submod_..."
+
 # BETA TEST:
 This is just a beta test and everything is subject to change
 
