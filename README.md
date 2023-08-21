@@ -11,7 +11,16 @@ Planned: Unhard code images/sprites and files
 
 Update v0.1.2 (Release Date: TBA)
 
+Additions: Replacing the word "Spaceroom"
+-If you have a custom location, it will replace the word "Spaceroom" with your current location in MAS
+
+Reworks: Interaction SFX
+- Interactions will make a noise when you hover over them
+- Secret interactions will still be silent
+
+Bug fixing: 
 Fixing the third option "Return to Submod_..."
+
 
 # BETA TEST:
 This is just a beta test and everything is subject to change
