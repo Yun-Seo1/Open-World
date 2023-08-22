@@ -38,7 +38,7 @@ label OW_residential:
         "Interact":
             #call screen dialog(message="Error: No Interaction options have been added", ok_action=Return())
             jump OW_residential_interaction
-        "Return to [RTMAS.title()]":
+        "Return to [RTMAS]":
             call OW_Go_Back_To_Classroom
 
 #####

@@ -45,7 +45,7 @@ label OW_sayori_room:
             jump OW_sayori_room_talk
         "Interact":
             jump OW_sayori_room_interaction
-        "Return to [RTMAS.title()]":
+        "Return to [RTMAS]":
             call OW_Go_Back_To_Classroom
 
 #####
@@ -74,9 +74,9 @@ label OW_sayori_room_interaction:
     screen OWAWM_sayori_room():
         imagemap:
             ground "bg/sayori_bedroom.png"
-            hotspot (739, 440, 213, 256) action Jump("OW_sayori_cow")
-            hotspot (435, 466, 293, 156) action Jump("OW_sayori_bed")
-            hotspot (61, 247, 86, 122) action Jump("OW_sayori_calendar")
+            hotspot (739, 440, 213, 256) action Jump("OW_sayori_cow") hover_sound gui.hover_sound
+            hotspot (435, 466, 293, 156) action Jump("OW_sayori_bed") hover_sound gui.hover_sound
+            hotspot (61, 247, 86, 122) action Jump("OW_sayori_calendar") hover_sound gui.hover_sound
             hotspot (456, 196, 66, 32) action Jump("OW_sayori_secret_scare")
         zorder 50
         style_prefix "hkb"
@@ -98,9 +98,8 @@ label OW_sayori_cow:
     m "Oh hello Mr. Cow."
     show monika 1d_owawm at t11
     m "Gosh, I never thought I would interact with him."
-    #Change Spaceroom with the title of the area when i get it working
-    m 10n_owawm "I wish I could take you back to the Spaceroom with me someday."
-    m 1o_owawm "But I can't seem to take anything from here back to the Spaceroom."
+    m 10n_owawm "I wish I could take you back to the [RTMAS] with me someday."
+    m 1o_owawm "But I can't seem to take anything from here back to the [RTMAS]."
     m 1r_owawm "Maybe it's for the better anyways... I don't want to be reminded of... you know..."
     m 3p_owawm "After all... it was me who pushed her over the edge and told her stuff I shouldn't have said."
     window hide
@@ -117,7 +116,7 @@ label OW_sayori_bed:
     m "What a messy room this girl had. Not only is her bed messy, but everything is thrown all over the place"
     m 8m_owawm "She should have cleaned up from time to time..."
     m 1o_owawm "I've read the script of her telling {color=#000}[OW_mc]{/color} why her room is like this."
-    m 3p_owawm "I've told you back in the Spaceroom, that if you're too depressed doing something, do something small like cleaning your room little by little."
+    m 3p_owawm "I've told you back in the [RTMAS], that if you're too depressed doing something, do something small like cleaning your room little by little."
     m 3q_owawm "Please don't ever think about doing what {color=#000}S[OW_sayori]{/color} did."
     m 1g_owawm "There are many people who care about you, I'm one of them."
     show monika 1e_owawm at t11

@@ -21,7 +21,7 @@ label OW_school_gate:
             jump OW_school_gate_talk
         "Interact":
             jump OW_school_gate_interaction
-        "Return to [RTMAS.title()]":
+        "Return to [RTMAS]":
             call OW_Go_Back_To_Classroom
 
 #####
@@ -31,7 +31,7 @@ label OW_school_gate_talk:
     $ OW_talk_topics = renpy.random.randint(1,2)
     if OW_talk_topics == 1,2:
         m 1n_owawm "Hey [player]... You know how I wasn't so enthusiastic when I first saw the school gates right?"
-        m 9o_owawm "Well... Remember back in the Spaceroom when I talked about not having memories and not knowing where 'Home' really is."
+        m 9o_owawm "Well... Remember back in the [RTMAS] when I talked about not having memories and not knowing where 'Home' really is."
         m 9p_owawm "It sort of hit me when I first saw this place, was this here before or was it only added because you."
         m 1q_owawm "It makes me want to go to your reality even more, because then I'll have real memories instead of doubting my world whenever we go somewhere new."
         m 4l_owawm "Just speaking my mind is all since you wanted to talk with me. "
@@ -64,11 +64,7 @@ label OW_school_gate_interaction:
     screen OWAWM_school_gate():
         imagemap:
             ground "bg school gate"
-            hotspot (711, 555, 17, 11):
-                if (persistent.OW_has_seen_fake_bsod == False):
-                    action Jump("OW_fake_bdos")
-                else:
-                    action NullAction()
+            hotspot (546, 165, 59, 34) action Jump("OW_third_floor") hover_sound gui.hover_sound
         zorder 50
         style_prefix "hkb"
         vbox:
@@ -100,6 +96,34 @@ label OW_school_gate_interaction:
             #xysize(0,None)
             action Jump("OW_monika_house_beta_1") hover_sound gui.hover_sound
 
+##############
+#Hotspot Label
+##############
+
+label OW_third_floor:
+    show monika 8b_owawm at hf11
+    m "Hey, maybe we can see the club room from here."
+    pause 1.0
+    m 8n_owawm "Actually... Where would the club room be located?"
+    m 4n_owawm "I've never really thought about that. When I try to remember something other than the locations in {b}Doki Doki Literature Club{/b} "
+    extend 4o_owawm "my memory starts to get foggy..."
+    show monika 5e_owawm at f11
+    pause 0.5
+    m 5f_owawm "It's like the game is trying to keep it hidden from me..."
+    m "I meant {b}Doki Doki Literature Club{/b}, not the world you're making for me."
+    m 5g_owawm "I know you wouldn't do something like that to me on purpose, right [player]?"
+    menu:
+        "Of course not [m_name]":
+            pass
+    show monika 5h_owawm at f11
+    window hide
+    pause 1.5
+    show monika 5a_owawm at h11
+    m "I'm only teasing [player]~"
+    m 5b_owawm "But if you are, you better not be lying~"
+    call screen OWAWM_school_gate
+    
+
 
 #############
 #Leaving Area
@@ -118,9 +142,9 @@ label OW_go_to_residential_from_school_gate:
             scene bg residential_day with dissolve_scene_full
             $ play_song(audio.street_stoll,loop = True, fadein = 0)
             pause 2.0
-            jump OW_school_gate
+            jump OW_residential
         "No":
-            call screen OWAWM_residential()
+            call screen OWAWM_school_gate()
 
 label OW_monika_house_beta_1:
     show screen tear(20, 0.1, 0.1, 0, 40)

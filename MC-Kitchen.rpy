@@ -15,7 +15,7 @@ label OW_Go_To_MC_Kitchen:
             jump OW_MC_kitchen_talk
         "Interact":
             jump OW_MC_Kitchen_Interaction
-        "Return to [RTMAS.title()]":
+        "Return to [RTMAS]":
             call OW_Go_Back_To_Classroom
 #####
 #Talk
@@ -45,8 +45,8 @@ label OW_MC_Kitchen_Interaction:
     screen OWAWM_MC_KITCHEN():
         imagemap:
             ground "bg/kitchen.png"
-            hotspot(28, 184, 229, 273) action Jump("OW_kitchen_fridge")
-            hotspot(1047, 397, 147, 100) action Jump("OW_kitchen_convention_oven")
+            hotspot(28, 184, 229, 273) action Jump("OW_kitchen_fridge") hover_sound gui.hover_sound
+            hotspot(1047, 397, 147, 100) action Jump("OW_kitchen_convention_oven") hover_sound gui.hover_sound
 
         zorder 50
         style_prefix "hkb"

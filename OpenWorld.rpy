@@ -9,7 +9,7 @@ init -990 python:
         author="Yun",
         name="Open World",
         description="A submod that allows you to take Monika to DDLC places and new ones.",
-        version="0.1.0",
+        version="0.1.2",
     )
 
 ######################
@@ -28,11 +28,7 @@ init -989 python:
 #VARIABLES
 ##########
 #Stores the current background before entering the Open World mod
-define RTMAS = persistent._mas_current_background
-#TODO: actually store it, not default to "Spaceroom"
-#init python:
-#    import store
-#define RTMAS = store.mas_current_background
+default RTMAS = _OW_save_loc()
 
 
 
@@ -104,6 +100,8 @@ define audio.monikas_conf = "Submods/OpenWorld/music/Monikas_confession.mp3" #Mi
 #init python:
     #OW_script_path = fom_getScriptFile(fallback = "game/submods/Open World/")
 init 5 python:
+    import store
+    from store import persistent, mas_background
     import os.path
     def OW_Gender():
         temp_gender = "partner"
@@ -138,6 +136,12 @@ init 5 python:
         persistent.OW_has_seen_residential = False
         persistent.OW_has_seen_school_gate = False
         return
+
+#Credit to Author: Herman S. <dreamscache.d@gmail.com>
+    def _OW_save_loc():
+        bg = mas_background.BACKGROUND_MAP[persistent._mas_current_background]
+        return renpy.substitute(bg.prompt)
+
 #Add more lines eventually
     def OW_random_talk():
         O_temp_talk = [

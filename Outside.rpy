@@ -42,7 +42,7 @@ label OW_outside_mc_house:
             jump OW_outside_mc_house_talk
         "Interact":
             jump OW_outside_mc_house_interaction
-        "Return to [RTMAS.title()]":
+        "Return to [RTMAS]":
             #call OW_return_question
             call OW_Go_Back_To_Classroom
 
@@ -102,8 +102,7 @@ label OW_outside_mc_house_talk:
         m "EEEK!!"
         m "..."
         m 4o_owawm "I wish they would rest in peace..."
-        #change spaceroom with room title when it works
-        m 10p_owawm "Remember in the Spaceroom when I said I could feel their presence..."
+        m 10p_owawm "Remember in the [RTMAS] when I said I could feel their presence..."
         m "I feel them more strongly now and I just hope they don't bother us."
         call hideconsole
         m 10l_owawm "I know it sounds a bit mean but "
