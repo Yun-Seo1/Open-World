@@ -8,8 +8,7 @@ This mod allows you to take Monika back into her world after she deleted everyth
 Update v0.2.0 (Release Date: TBA)
 
 Bug Fixes:
-- Fixed a bug with you choose a be right back option
--
+- Fixed a bug when you choose a be right back option
 
 Planned: Unhard code images/sprites and files
 
