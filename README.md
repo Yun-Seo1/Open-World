@@ -5,6 +5,10 @@
 This mod allows you to take Monika back into her world after she deleted everything at the end of **Doki Doki Literature Club**. Not only that but you can click certain things in the environment and she'll take a look at it. However, because of her deletion, some corruption and some bugs will appear as you explore the world with her
 
 # Update List:
+Halloween Horror (Release Date: Hopefully by Oct 31)
+- Will be worked on after v0.2.0
+- Will be a separate Submod
+
 Update v0.2.0 (Release Date: TBA)
 
 Additions:
