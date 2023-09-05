@@ -28,6 +28,6 @@ This is just a beta test and everything is subject to change
 
 # INSTALLATION:
 Download the latest version zip and unzip it before putting it in your 'Submods' folder in MAS. (If you don't have one, make it).
-If you have any issues with the installation, i have created a Discord for people to go to for help
+If you have any issues with the installation, i have created a Discord for people to go to for help or just hang out
 
 [![Discord](https://discordapp.com/api/guilds/1148704355449589913/widget.png?style=banner2)](https://discord.gg/bMyGJUejpv)
