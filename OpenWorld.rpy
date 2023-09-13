@@ -9,7 +9,7 @@ init -990 python:
         author="Yun",
         name="Open World",
         description="A submod that allows you to take Monika to DDLC places and new ones.",
-        version="0.1.2",
+        version="0.2.0",
     )
 
 ######################
@@ -28,6 +28,7 @@ init -989 python:
 #VARIABLES
 ##########
 #Stores the current background before entering the Open World mod
+#TODO: If a person changes location, update the button
 default RTMAS = _OW_save_loc()
 
 
@@ -51,6 +52,7 @@ default OW_talk_topics = None
 #default OW_file = mangleFile()
 
 #TODO: Make an option to reenable persistent + delete secrets
+#TODO: REWORK THE INTRODUCTION AND PERSISTENT 
 #files in the future
 #default persistent.OW_splash_screen_warning = False
 default persistent.monika_rickroll = "???"
@@ -76,6 +78,7 @@ image bg TEST = "Submods/OpenWorld/images/test.png"
 image bg Destroyed_Doki_Hall = "Submods/OpenWorld/images/Destroyed_Doki_Hall.jpg"
 image bg spaceroom_alt = "Submods/OpenWorld/images/XQ587jv.png"
 image bg school gate = "Submods/OpenWorld/images/school_gate_2.jpg"
+image music_screen = "Submods/OpenWorld/images/music_screen.png"
 
 #TODO: Day and night system using MAS's system
 #TODO: Add new transitions
@@ -86,17 +89,21 @@ image bg school gate = "Submods/OpenWorld/images/school_gate_2.jpg"
 #TODO: Create a music button so people can choose what they wish to listen to
 #Only for the music in the Open World mod though
 #NOTE BETA: More songs will be added in the future, please bare with the limited selection
-define audio.MC_Room = "Submods/OpenWorld/music/idksomethingddlc.mp3"
-define audio.deep_breaths = "Submods/OpenWorld/music/Deep Breaths inst.mp3"
 define audio.alone_time = "Submods/OpenWorld/music/alonetime.ogg"
-define audio.dating_sim_loop = "Submods/OpenWorld/music/dumb_dating_sim_loop.mp3"
-define audio.street_stoll = "Submods/OpenWorld/music/main_street_stroll.ogg"
-define audio.street_stoll_remix = "Submods/OpenWorld/music/main_street_stroll_new_mix.ogg"
-define audio.monikas_conf = "Submods/OpenWorld/music/Monikas_confession.mp3" #Might go unused. Depends on how I feel about it later on
 
 #############
 #PYTHON STUFF
 #############
+
+#TODO: Needs fixing, will be kept off until further notice.
+#Test these two and see if they could be implimented 
+#store.mas_submod_utils.current_label:
+#    This variable holds the current label we're in
+# store.mas_submod_utils.last_label:
+#    This variable holds the last label we were in.
+default OW_current_label = mas_submod_utils.current_label
+default OW_last_label = mas_submod_utils.last_label
+    
 #init python:
     #OW_script_path = fom_getScriptFile(fallback = "game/submods/Open World/")
 init 5 python:
@@ -121,11 +128,13 @@ init 5 python:
             pass
         else:
             renpy.call_screen("dialog", message="Dev Only", ok_action=Jump("mas_extra_menu_close"))
+
     def OW_hard_reset():
         persistent.OW_has_seen_fake_bsod = False
         persistent.OW_first_interference = False
         OW_soft_reset()
         return
+
     def OW_soft_reset():
         persistent.monika_rickroll = "???"
         persistent.OW_has_seen_MC_Room = False
@@ -136,6 +145,10 @@ init 5 python:
         persistent.OW_has_seen_residential = False
         persistent.OW_has_seen_school_gate = False
         return
+    ###############
+    #For music menu
+    ###############
+    
 
 #Credit to Author: Herman S. <dreamscache.d@gmail.com>
     def _OW_save_loc():
@@ -145,16 +158,16 @@ init 5 python:
 #Add more lines eventually
     def OW_random_talk():
         O_temp_talk = [
-            "What should we check out?",
-            "I'd love for you to be with me right now, ehehe~",
-            "Did you want to ask me something?",
-            "What should we do?",
-            "Did you inspect everything thoroughly? Ahaha~",
+            _("What should we check out?"),
+            _("I'd love for you to be with me right now, ehehe~"),
+            _("Did you want to ask me something?"),
+            _("What should we do?"),
+            _("Did you inspect everything thoroughly? Ahaha~"),
             #"Ah, did you open a menu? Sorry, I was too busy admiring what you've done for me.",
-            "It feels a bit weird snooping into their homes but who's here to stop us? Ehehe~",
-            "Going to all these places make feel uneasy, but I feel safe knowing you're with me.",
-            "I wonder what secrets our friends were hiding... PG-13 secrets of course. Ahaha...",
-            "Wouldn't it be nice to just hold hands and walk around my world... after we find out what's causing these glitches that is.",
+            _("It feels a bit weird snooping into their homes but who's here to stop us? Ehehe~"),
+            _("Going to all these places make feel uneasy, but I feel safe knowing you're with me."),
+            _("I wonder what secrets our friends were hiding... PG-13 secrets of course. Ahaha..."),
+            _("Wouldn't it be nice to just hold hands and walk around my world... after we find out what's causing these glitches that is."),
 
         ]
         O_temp_talk = renpy.random.choice(O_temp_talk)
@@ -284,13 +297,19 @@ init 10000:
                     $ store.mas_sprites.adjust_zoom()
         #zorder 50
         frame:
-            area (308, 639, 202, 65)
+            area (310, 639, 202, 65)
             style "mas_extra_menu_frame"
-            textbutton ("Open World"):
-                xalign 0.5
-                yalign 0.5
-                action [Hide("mas_extramenu_area"), Jump("view_OW")] hover_sound gui.hover_sound
-
+            if persistent._mas_in_idle_mode == True:
+                textbutton ("Open World"):
+                    xalign 0.5
+                    yalign 0.5
+                    action NullAction()
+            else:
+                textbutton ("Open World"):
+                    xalign 0.5
+                    yalign 0.5
+                    action [Hide("mas_extramenu_area"), Jump("view_OW")] hover_sound gui.hover_sound
+            
 screen OW_MENU():
     zorder 50
     style_prefix "hkb"
@@ -322,6 +341,7 @@ label view_OW:
         OW_submenu()
     return
 
+#TODO: Silence Noises Submod as well
 label OW_warning:
     m 2wta "You want to show me something?{nw}"
     $ _history_list.pop()
@@ -338,8 +358,7 @@ label OW_warning:
             $ HKBHideButtons()
             $ is_sitting = False
             hide black
-
-            $ play_song(audio.t3,loop = True, fadein = 1.0)
+            $ OW_play_song(persistent.OW_current_track, fadein = 1.0)
             scene bg house
             call OW_outside_mc_house
         "No":
@@ -348,12 +367,7 @@ label OW_warning:
             m 6ekblp "I really want to see what this is. I guess you can say it peaked my interest, ehehe~."
             jump ch30_loop
 
-#TODO: Needs fixing, will be kept off until further notice.
-#Test these two and see if they could be implimented 
-#store.mas_submod_utils.current_label:
-#    This variable holds the current label we're in
-#store.mas_submod_utils.last_label:
-#    This variable holds the last label we were in.
+
 label OW_return_question:
     m "Do you want to return to the [RTMAS]?{nw}"
     $ _history_list.pop()
@@ -367,7 +381,7 @@ label OW_return_question:
 
 
 
-#TODO: v0.0.3 for random act 3 room implementation
+#TODO: v0.2.0 for random act 3 room implementation
 #Need to make sure it have enough for people to enjoy
 label OW_location_set:
 
@@ -416,6 +430,7 @@ label OW_go_to_hub:
             window hide
             stop music fadeout 4
             show black zorder 100 with Dissolve(5.0, alpha=True)
+            $ OW_play_song(persistent.OW_current_track, fadein = 1.0)
             $ HKBHideButtons()
             $ enable_esc()
             call OW_Start_Area
@@ -512,7 +527,7 @@ label OW_first_act_3_visit_1:
     m 10k_owawm "Of course, anytime [mas_get_player_nickname()]."
     pause 1.0
     m 4l_owawm "Oh right, the big question... where are we?..."
-    m 4m_owawm "It felt like the spaceroom when I first woke up but... it's not." #change spaceroom to location name later on
+    m 4m_owawm "It felt like the {b}Spaceroom{/b} when I first woke up but... it's not."
     m 1d_owawm "Can you give me a minute to look outside? It looks... beautiful."
     menu:
         "Sure [m_name]":
@@ -535,7 +550,7 @@ label OW_first_act_3_visit_1:
     m 1t_owawm "But I know our love will survive something like this. After all, you were able to find me again."
     show monika 5a_owawm at h11
     m "You take the good with the bad, right?"
-    m "I'll go ahead and lead the way back to the spaceroom." #replace spaceroom
+    m "I'll go ahead and lead the way back to the [RTMAS]."
     hide monika
     window hide
     menu:
@@ -567,6 +582,7 @@ label OW_first_interference:
     window hide
     $ mouse_visible = True
     $ persistent.OW_first_interference = True
+    $ OW_play_song(persistent.OW_current_track, fadein = 1.0)
     return
 
 

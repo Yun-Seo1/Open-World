@@ -28,7 +28,7 @@ label OW_residential:
         pause 0.5
         m "And this time... {w=0.5}"
         extend 8u_owawm "You are completely in my league [mas_get_player_nickname()]~"
-        $ play_song(audio.street_stoll,loop = True, fadein = 0)
+        $ OW_play_song(persistent.OW_current_track, fadein = 1)
         $ persistent.OW_has_seen_residential = True 
     show monika 1a_owawm at t11
     menu:
@@ -36,10 +36,13 @@ label OW_residential:
         "Talk":
             jump OW_residential_talk
         "Interact":
-            #call screen dialog(message="Error: No Interaction options have been added", ok_action=Return())
             jump OW_residential_interaction
+        "Music":
+            call OW_select_music
+            jump OW_residential
         "Return to [RTMAS]":
-            call OW_Go_Back_To_Classroom
+            call OW_return_question
+            jump OW_residential
 
 #####
 #Talk
@@ -184,7 +187,6 @@ label OW_go_to_neighborhood:
         m "Do you want to go outside {color=#000}[OW_mc]{/color}'s house [player]?{fast}"
         "Yes":
             scene bg house with dissolve_scene_full
-            $ play_song(audio.t3,loop = True, fadein = 0)
             pause 2.0
             jump OW_outside_mc_house
         "No":
@@ -202,7 +204,6 @@ label OW_go_to_school_gate:
                 stop music
                 call OW_first_interference
             scene bg school gate with dissolve_scene_full
-            $ play_song(audio.street_stoll_remix,loop = True, fadein = 0)
             pause 2.0
             jump OW_school_gate
         "No":

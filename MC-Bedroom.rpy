@@ -29,8 +29,12 @@ label OW_Go_To_MC_Room:
             jump OW_MC_Room_Talk
         "Interact":
             jump OW_MC_Room_Interaction
+        "Music":
+            call OW_select_music
+            jump OW_Go_To_MC_Room
         "Return to [RTMAS]":
-            call OW_Go_Back_To_Classroom
+            call OW_return_question
+            jump OW_Go_To_MC_Room
 
 
 #High randint option to make some talk options rare
@@ -243,7 +247,6 @@ label OW_Leave_MC_Room:
         m "Do you want to go downstairs [player]?{fast}"
         "Yes":
             scene bg kitchen with dissolve_scene_full
-            $ play_song(audio.deep_breaths,loop = True, fadein = 0)
             pause 2.0
             jump OW_Go_To_MC_Kitchen
         "No":

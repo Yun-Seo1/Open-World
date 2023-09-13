@@ -21,8 +21,12 @@ label OW_school_gate:
             jump OW_school_gate_talk
         "Interact":
             jump OW_school_gate_interaction
+        "Music":
+            call OW_select_music
+            jump OW_school_gate
         "Return to [RTMAS]":
-            call OW_Go_Back_To_Classroom
+            call OW_return_question
+            jump OW_school_gate
 
 #####
 #Talk
@@ -140,7 +144,6 @@ label OW_go_to_residential_from_school_gate:
                 stop music
                 call OW_first_interference
             scene bg residential_day with dissolve_scene_full
-            $ play_song(audio.street_stoll,loop = True, fadein = 0)
             pause 2.0
             jump OW_residential
         "No":

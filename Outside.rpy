@@ -42,9 +42,13 @@ label OW_outside_mc_house:
             jump OW_outside_mc_house_talk
         "Interact":
             jump OW_outside_mc_house_interaction
+        "Music":
+            call OW_select_music
+            jump OW_outside_mc_house
         "Return to [RTMAS]":
-            #call OW_return_question
-            call OW_Go_Back_To_Classroom
+            call OW_return_question
+            jump OW_outside_mc_house
+
 
 #####
 #Talk
@@ -116,6 +120,7 @@ label OW_outside_mc_house_talk:
         play sound "sfx/giggle.ogg"
         pause 1.5
         jump OW_outside_mc_house
+    return
 
 ############
 #Interaction
@@ -211,6 +216,7 @@ label OW_residential_glitch:
     m 5a_owawm "Maybe we can even head to the school."
     $ persistent.OW_has_seen_residential_glitch = True
     call screen OWAWM_outside
+    return
 
 #################
 #Leaving the area
@@ -224,7 +230,6 @@ label OW_back_to_mc_kitchen:
         "Yes":
             scene bg kitchen with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.deep_breaths,loop = True, fadein = 0)
             jump OW_Go_To_MC_Kitchen
         "No":
             call screen OWAWM_outside()
@@ -239,7 +244,6 @@ label OW_go_to_sayori_room:
                 $ play_song(audio.t2g3,loop = True, fadein = 0)
                 jump OW_sayori_scare
             scene bg sayori_bedroom with dissolve_scene_full
-            $ play_song(audio.t2,loop = True, fadein = 0)
             pause 2.0
             jump OW_sayori_room
         "No":
@@ -253,7 +257,6 @@ label OW_go_to_residential:
         "Yes":
             scene bg residential_day with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.street_stoll,loop = True, fadein = 0)
             jump OW_residential
         "No":
             call screen OWAWM_outside()

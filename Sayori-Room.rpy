@@ -30,7 +30,7 @@ label OW_sayori_scare:
     pause 0.2
     stop sound
     hide screen tear
-    $ play_song(audio.t2,loop = True, fadein = 0)
+    $ OW_play_song(persistent.OW_current_track,fadein = 1.0)
     $ persistent.OW_has_seen_sayori_room = True
     jump OW_sayori_room
 #Wont replay unless persistent is reset
@@ -45,8 +45,12 @@ label OW_sayori_room:
             jump OW_sayori_room_talk
         "Interact":
             jump OW_sayori_room_interaction
+        "Music":
+            call OW_select_music
+            jump OW_sayori_room
         "Return to [RTMAS]":
-            call OW_Go_Back_To_Classroom
+            call OW_return_question
+            jump OW_sayori_room
 
 #####
 #Talk
@@ -172,7 +176,6 @@ label OW_go_outside_from_sayori_room:
         m "Do you want to go outside [player]?{fast}"
         "Yes":
             scene bg house with dissolve_scene_full
-            $ play_song(audio.t3,loop = True, fadein = 0)
             pause 2.0
             jump OW_outside_mc_house
         "No":

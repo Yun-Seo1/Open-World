@@ -15,8 +15,13 @@ label OW_Go_To_MC_Kitchen:
             jump OW_MC_kitchen_talk
         "Interact":
             jump OW_MC_Kitchen_Interaction
+        "Music":
+            call OW_select_music
+            jump OW_Go_To_MC_Kitchen
         "Return to [RTMAS]":
-            call OW_Go_Back_To_Classroom
+            call OW_return_question
+            jump OW_Go_To_MC_Kitchen
+    
 #####
 #Talk
 #####
@@ -73,7 +78,7 @@ label OW_kitchen_fridge:
     m "The fridge is completely empty too!"
     m 8r_owawm "I expected as much considering other things seem like props."
     m 1p_owawm "I missed my world but it just feels lifeless and empty."
-    m 1o_owawm "I'm glad that there's food in the spaceroom..."
+    m 1o_owawm "I'm glad that there's food in the [RTMAS]..."
     m "This kinda makes me feel less human in a way."
     m 2m_owawm "I should look on the brightside of things though. Even if there's no food here, I can always count on you to give me some."
     m 4l_owawm "Besides, the food you give me always tastes better than the food I code in myself."
@@ -111,7 +116,6 @@ label OW_back_upstairs:
         "Yes":
             scene bg bedroom with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.MC_Room,loop = True, fadein = 0)
             jump OW_Go_To_MC_Room
         "No":
             call screen OWAWM_MC_KITCHEN()
@@ -124,7 +128,6 @@ label OW_go_outside_from_kitchen:
         "Yes":
             scene bg house with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.t3,loop = True, fadein = 0)
             jump OW_outside_mc_house
         "No":
             call screen OWAWM_MC_KITCHEN()
