@@ -29,8 +29,12 @@ label OW_Go_To_MC_Room:
             jump OW_MC_Room_Talk
         "Interact":
             jump OW_MC_Room_Interaction
-        "Return to [RTMAS.title()]":
-            call OW_Go_Back_To_Classroom
+        "Music":
+            call OW_select_music
+            jump OW_Go_To_MC_Room
+        "Return to [RTMAS]":
+            call OW_return_question
+            jump OW_Go_To_MC_Room
 
 
 #High randint option to make some talk options rare
@@ -55,7 +59,7 @@ label OW_MC_Room_Talk:
         jump OW_Go_To_MC_Room
     elif OW_talk_topics == 2:
         m 3o_owawm "I've never actually been in {color=#000}[OW_mc]{/color}'s room before. I'm a bit surprised with what's in here."
-        m 9p_owawm "You already know how I feel about him since we've talked about him back in the Spaceroom." #change spaceroom
+        m 9p_owawm "You already know how I feel about him since we've talked about him back in the [RTMAS]."
         m 9n_owawm "As someone as plain as {color=#000}[OW_mc]{/color}, his room has more life than he does. Ahaha."
         m "I know that sounds a bit rude but it's not like he was real, he was just a machine for you to control since you're the real person."
         m 9j_owawm "And I'm grateful to have someone as unique as you, ehehe~"
@@ -82,7 +86,7 @@ label OW_MC_Room_Talk:
         show monika 8u_owawm at t11
         pause 3.0 
         m 2t_owawm "You know... I sleep every night alone and I know you probably do too..."
-        m 8k_owawm "Ahaha, relax [player]. I'm only teasing you..." 
+        m 8k_owawm "Ahaha, relax [player]. I'm only teasing you... " 
         extend 8t_owawm "well, just a little~"
         jump OW_Go_To_MC_Room
     elif OW_talk_topics <= 5:
@@ -105,9 +109,9 @@ label OW_MC_Room_Interaction:
     screen OWAWM_MC_ROOM():
         imagemap:
             ground "bg/bedroom.png"
-            hotspot (111, 207, 102, 510) action Jump("OW_MC_Book_Shelfs")
-            hotspot (565, 262, 151, 364) action Jump("OW_MC_Closet")
-            hotspot (1103, 601, 175, 118) action Jump("OW_MC_Computer")
+            hotspot (111, 207, 102, 510) action Jump("OW_MC_Book_Shelfs") hover_sound gui.hover_sound
+            hotspot (565, 262, 151, 364) action Jump("OW_MC_Closet") hover_sound gui.hover_sound
+            hotspot (1103, 601, 175, 118) action Jump("OW_MC_Computer") hover_sound gui.hover_sound
             hotspot (715, 547, 124, 44) action Jump("OW_MC_Secret_Jump_Scare")
         zorder 50
         style_prefix "hkb"
@@ -243,7 +247,6 @@ label OW_Leave_MC_Room:
         m "Do you want to go downstairs [player]?{fast}"
         "Yes":
             scene bg kitchen with dissolve_scene_full
-            $ play_song(audio.deep_breaths,loop = True, fadein = 0)
             pause 2.0
             jump OW_Go_To_MC_Kitchen
         "No":

@@ -134,7 +134,7 @@ label Testing_scroll_menu:
     python:
         testing_menu = [
             ("Testing console call", 'OW_console_test'),
-            ("Music Test", 'OW_music_test'),
+            ("Music_Test #2", 'music_test_2'),
             ("Sayori Glitch", 'OW_glitched_sayori'),
             ("Sitting Test", 'OW_sitting_test'),
             ("instant transition", 'OW_instant'),
@@ -144,28 +144,23 @@ label Testing_scroll_menu:
             ("l? position", 'OW_l_position'),
             ("hf? position", 'OW_hf_position'),
             ("Changing window style", 'OW_window_style'),
-            ("Testing", 'OW_text'),
-            ("Testing", 'OW_text'),
-            ("Testing", 'OW_text'),
+            ("Hiding Monika?", 'OW_Testing_Hide'),
+            ("Nightmare", 'OWN_click_map_label'),
+            ("Testing CG", 'OWN_test_cg'),
+            ("Testing Music Screen",'OW_music_test'),
             ("Return", 'OW_Sprite_Test'),
         ]
     call screen OW_gen_list(testing_menu, mas_ui.SCROLLABLE_MENU_TXT_LOW_AREA)
     return
-label OW_text:
-    jump OW_Sprite_Test
+label music_test_2:
+    
+    return
 
 label OW_console_test:
     $ consolehistory = []
     call updateconsole("Test", "This is a test")
     m "Seems like the test works"
     call hideconsole
-    jump Testing_scroll_menu
-
-label OW_music_test:
-    $ play_song(audio.deep_breaths,loop = False)
-    narrator "Test"
-    $ play_song(audio.alone_time, loop = False)
-    narrator "Test"
     jump Testing_scroll_menu
 
 label OW_glitched_sayori:
@@ -319,3 +314,17 @@ label OW_window_style:
     m 5a_owawm "testing"
     $ style.say_window = style.window
     jump Testing_scroll_menu
+
+label OW_Testing_Hide:
+    show monika 5e_owawm at t11
+    m "bye"
+    pause 1.0
+    show monika at lhide
+    hide monika
+    pause 1.0
+    jump Testing_scroll_menu
+
+label OW_music_test:
+    call OW_select_music
+    jump Testing_scroll_menu
+    return

@@ -5,7 +5,6 @@
 #WILL BE REMOVED IN BETA/FIRST RELEASE
 
 label OW_Start_Area:
-    stop music
     hide black
     scene bg TEST
     pause 0.75
@@ -37,8 +36,8 @@ label OW_Start_Area:
             scene bg house with dissolve_scene_full
             pause 1.0
             jump OW_outside_mc_house
-        "Monika's house":
-            call screen dialog(message="Error:Monika's house in progress", ok_action=Return())
+        "Null":
+            call OW_select_music
             jump OW_Start_Area
         "Monika's bedroom":
             call screen dialog(message="Error:Monika's room in progress", ok_action=Return())

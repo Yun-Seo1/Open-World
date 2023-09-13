@@ -30,7 +30,7 @@ label OW_sayori_scare:
     pause 0.2
     stop sound
     hide screen tear
-    $ play_song(audio.t2,loop = True, fadein = 0)
+    $ OW_play_song(persistent.OW_current_track,fadein = 1.0)
     $ persistent.OW_has_seen_sayori_room = True
     jump OW_sayori_room
 #Wont replay unless persistent is reset
@@ -42,19 +42,22 @@ label OW_sayori_room:
     menu:
         m "[OW_random_talk()]{fast}"
         "Talk":
-            call screen dialog(message="Error: No Talk options have been added", ok_action=Return())
-            jump OW_sayori_room
+            jump OW_sayori_room_talk
         "Interact":
             jump OW_sayori_room_interaction
-        "Return to [RTMAS.title()]":
-            call OW_Go_Back_To_Classroom
+        "Music":
+            call OW_select_music
+            jump OW_sayori_room
+        "Return to [RTMAS]":
+            call OW_return_question
+            jump OW_sayori_room
 
 #####
 #Talk
 #####
 label OW_sayori_room_talk:
-    $ OW_talk_topics = renpy.random.randint(1)
-    if OW_talk_topics == 1:
+    $ OW_talk_topics = renpy.random.randint(1,2)
+    if OW_talk_topics == 1,2:
         m 3a_owawm "{color=#000}S[OW_sayori]{/color} was a weird girl."
         m "She always had an appetite"
         m 4k_owawm "This reminds me of a time {color=#000}N[OW_natsuki]{/color} baked cupcakes the first time when we accepted her and you know what happened?"
@@ -75,9 +78,9 @@ label OW_sayori_room_interaction:
     screen OWAWM_sayori_room():
         imagemap:
             ground "bg/sayori_bedroom.png"
-            hotspot (739, 440, 213, 256) action Jump("OW_sayori_cow")
-            hotspot (435, 466, 293, 156) action Jump("OW_sayori_bed")
-            hotspot (61, 247, 86, 122) action Jump("OW_sayori_calendar")
+            hotspot (739, 440, 213, 256) action Jump("OW_sayori_cow") hover_sound gui.hover_sound
+            hotspot (435, 466, 293, 156) action Jump("OW_sayori_bed") hover_sound gui.hover_sound
+            hotspot (61, 247, 86, 122) action Jump("OW_sayori_calendar") hover_sound gui.hover_sound
             hotspot (456, 196, 66, 32) action Jump("OW_sayori_secret_scare")
         zorder 50
         style_prefix "hkb"
@@ -99,9 +102,8 @@ label OW_sayori_cow:
     m "Oh hello Mr. Cow."
     show monika 1d_owawm at t11
     m "Gosh, I never thought I would interact with him."
-    #Change Spaceroom with the title of the area when i get it working
-    m 10n_owawm "I wish I could take you back to the Spaceroom with me someday."
-    m 1o_owawm "But I can't seem to take anything from here back to the Spaceroom."
+    m 10n_owawm "I wish I could take you back to the [RTMAS] with me someday."
+    m 1o_owawm "But I can't seem to take anything from here back to the [RTMAS]."
     m 1r_owawm "Maybe it's for the better anyways... I don't want to be reminded of... you know..."
     m 3p_owawm "After all... it was me who pushed her over the edge and told her stuff I shouldn't have said."
     window hide
@@ -118,7 +120,7 @@ label OW_sayori_bed:
     m "What a messy room this girl had. Not only is her bed messy, but everything is thrown all over the place"
     m 8m_owawm "She should have cleaned up from time to time..."
     m 1o_owawm "I've read the script of her telling {color=#000}[OW_mc]{/color} why her room is like this."
-    m 3p_owawm "I've told you back in the Spaceroom, that if you're too depressed doing something, do something small like cleaning your room little by little."
+    m 3p_owawm "I've told you back in the [RTMAS], that if you're too depressed doing something, do something small like cleaning your room little by little."
     m 3q_owawm "Please don't ever think about doing what {color=#000}S[OW_sayori]{/color} did."
     m 1g_owawm "There are many people who care about you, I'm one of them."
     show monika 1e_owawm at t11
@@ -174,7 +176,6 @@ label OW_go_outside_from_sayori_room:
         m "Do you want to go outside [player]?{fast}"
         "Yes":
             scene bg house with dissolve_scene_full
-            $ play_song(audio.t3,loop = True, fadein = 0)
             pause 2.0
             jump OW_outside_mc_house
         "No":

@@ -42,9 +42,13 @@ label OW_outside_mc_house:
             jump OW_outside_mc_house_talk
         "Interact":
             jump OW_outside_mc_house_interaction
-        "Return to [RTMAS.title()]":
-            #call OW_return_question
-            call OW_Go_Back_To_Classroom
+        "Music":
+            call OW_select_music
+            jump OW_outside_mc_house
+        "Return to [RTMAS]":
+            call OW_return_question
+            jump OW_outside_mc_house
+
 
 #####
 #Talk
@@ -102,8 +106,7 @@ label OW_outside_mc_house_talk:
         m "EEEK!!"
         m "..."
         m 4o_owawm "I wish they would rest in peace..."
-        #change spaceroom with room title when it works
-        m 10p_owawm "Remember in the Spaceroom when I said I could feel their presence..."
+        m 10p_owawm "Remember in the [RTMAS] when I said I could feel their presence..."
         m "I feel them more strongly now and I just hope they don't bother us."
         call hideconsole
         m 10l_owawm "I know it sounds a bit mean but "
@@ -117,6 +120,7 @@ label OW_outside_mc_house_talk:
         play sound "sfx/giggle.ogg"
         pause 1.5
         jump OW_outside_mc_house
+    return
 
 ############
 #Interaction
@@ -185,11 +189,11 @@ label OW_residential_glitch:
     m 5c_owawm "Error?... This is different..."
     m "Let me try it again."
     window hide
-    call updateconsole("Call Residential","Error")
-    call updateconsole("Call Residential","Error")
-    call updateconsole("Call Residential","Error")
+    call updateconsole("Scene Residential","Error")
+    call updateconsole("Teleport Residential","Error")
+    call updateconsole("Return Residential","Error")
     m 8s_owawm "I'm not giving up!"
-    call updateconsole("Call Residential","Error")
+    call updateconsole("Jump Residential","Error")
     m 5b_owawm "GRRR! Stupid console, work!"
     play sound "sfx/monikapound.ogg"
     show layer master:
@@ -202,7 +206,7 @@ label OW_residential_glitch:
             zoom 1.2
             easeout 0.35 zoom 1.0
     pause 1.0
-    call updateconsole("Call Residential", "Access Granted")
+    call updateconsole("Jump Residential", "Access Granted")
     show monika 1l_owawm at h11
     m "Ahaha... Guess it just needed a smack for it to work..."
     m 4m_owawm "I should probably be more careful next time."
@@ -212,6 +216,7 @@ label OW_residential_glitch:
     m 5a_owawm "Maybe we can even head to the school."
     $ persistent.OW_has_seen_residential_glitch = True
     call screen OWAWM_outside
+    return
 
 #################
 #Leaving the area
@@ -225,7 +230,6 @@ label OW_back_to_mc_kitchen:
         "Yes":
             scene bg kitchen with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.deep_breaths,loop = True, fadein = 0)
             jump OW_Go_To_MC_Kitchen
         "No":
             call screen OWAWM_outside()
@@ -240,7 +244,6 @@ label OW_go_to_sayori_room:
                 $ play_song(audio.t2g3,loop = True, fadein = 0)
                 jump OW_sayori_scare
             scene bg sayori_bedroom with dissolve_scene_full
-            $ play_song(audio.t2,loop = True, fadein = 0)
             pause 2.0
             jump OW_sayori_room
         "No":
@@ -254,7 +257,6 @@ label OW_go_to_residential:
         "Yes":
             scene bg residential_day with dissolve_scene_full
             pause 2.0
-            $ play_song(audio.street_stoll,loop = True, fadein = 0)
             jump OW_residential
         "No":
             call screen OWAWM_outside()
