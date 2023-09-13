@@ -12,14 +12,7 @@ Halloween Horror Open World (Release Date: Hopefully by Oct 31)
 - Will be worked on after v0.2.0
 - Will be a separate Submod
 
-Update v0.2.0 (Release Date: TBA)
-
-Additions:
-- New menu option
-
-Bug Fixes:
-- Fixed a bug when you choose a be right back option
-
+TBA
 Planned:
 - Unhard code images/sprites and files
 
